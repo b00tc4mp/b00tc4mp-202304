@@ -1,4 +1,103 @@
-var context = {}
+// database
+
+var users = []
+
+// populate the database
+
+var name = 'Peter Pan'
+var email = 'peter@pan.com'
+var password = '123123123'
+
+var user = {}
+
+user.name = name
+user.email = email
+user.password = password
+
+users.push(user)
+
+var name = 'Wendy Darling'
+var email = 'wendy@darling.com'
+var password = '123123123'
+
+var user = {}
+
+user.name = name
+user.email = email
+user.password = password
+
+users.push(user)
+
+var posts = []
+
+var post = {}
+
+post.email = users[0].email
+post.text = 'hello world'
+post.picture = 'https://b00tc4mp.com/discord.png'
+post.date = new Date
+
+posts.push(post)
+
+var post = {}
+
+post.email = users[1].email
+post.text = 'hallo welt'
+post.picture = 'https://www.hallo-welt.io/wp-content/uploads/2021/05/HalloWelt-LOGO-1transparent-1.png'
+post.date = new Date
+
+posts.push(post)
+
+// business (logic)
+
+function authenticateUser(email, password) {
+    var found
+
+    for (var i = 0; i < users.length; i++) {
+        var user = users[i]
+
+        if (user.email === email && user.password === password) {
+            found = user
+
+            break
+        }
+    }
+
+    if (found)
+        return true
+    else
+        return false
+}
+
+function registerUser(name, email, password) {
+    var found
+
+    for (var i = 0; i < users.length; i++) {
+        var user = users[i]
+
+        if (user.email === email) {
+            found = user
+
+            break
+        }
+    }
+
+    if (found)
+        return false
+    else {
+        var user = {}
+
+        user.name = name
+        user.email = email
+        user.password = password
+
+        users.push(user)
+
+        return true
+    }
+}
+
+// presentation
 
 document.querySelector('.login-page').querySelector('form').onsubmit = function (event) {
     event.preventDefault()
@@ -9,10 +108,7 @@ document.querySelector('.login-page').querySelector('form').onsubmit = function 
     var authenticated = authenticateUser(email, password)
  
     if (authenticated) {
-        context.email = email
-
         document.querySelector('.login-page').classList.add('off')
-        renderPosts()
         document.querySelector('.home-page').classList.remove('off')
     } else alert('Wrong credentials')
 }
@@ -67,38 +163,5 @@ document.querySelector('.home-page').querySelector('.post-modal').querySelector(
     var picture = event.target.picture.value
     var text = event.target.text.value
 
-    var created = createPost(context.email, picture, text)
-
-    if (created) {
-        document.querySelector('.home-page').querySelector('.post-modal').classList.add('off')
-
-        renderPosts()
-    } else
-        alert('cannot create post')
-}
-
-function renderPosts() {
-    document.querySelector('.home-page').querySelector('.home-posts').innerHTML = ''
-
-    var posts = retrievePosts(context.email)
-
-    for (var i = 0; i < posts.length; i++) {
-        var post = posts[i]
-
-        var article = document.createElement('article')
-        
-        var image = document.createElement('img')
-        image.src = post.picture
-        image.classList.add('post-image')
-
-        var paragraph = document.createElement('p')
-        paragraph.innerText = post.text
-
-        var time = document.createElement('time')
-        time.innerText = post.date.toString()
-
-        article.append(image, paragraph, time)
-
-        document.querySelector('.home-page').querySelector('.home-posts').append(article)
-    }
+    console.log('TODO create a post', picture, text)
 }
