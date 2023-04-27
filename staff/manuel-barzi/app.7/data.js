@@ -20,8 +20,7 @@ posts.push({
     user: users[0].email,
     text: 'hello world',
     picture: 'https://b00tc4mp.com/discord.png',
-    date: new Date,
-    likes: ['peter@pan.com', 'wendy@darling.com']
+    date: new Date
 })
 
 posts.push({
@@ -29,6 +28,5 @@ posts.push({
     user: users[1].email,
     text: 'hallo welt',
     picture: 'https://www.hallo-welt.io/wp-content/uploads/2021/05/HalloWelt-LOGO-1transparent-1.png',
-    date: new Date,
-    likes: []
+    date: new Date
 })

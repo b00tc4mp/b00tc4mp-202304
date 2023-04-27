@@ -80,7 +80,6 @@ function createPost(email, picture, text) {
     post.picture = picture
     post.text = text
     post.date = new Date
-    post.likes = []
 
     posts.push(post)
 
@@ -107,6 +106,10 @@ function retrievePosts(email) {
 }
 
 function modifyPost(email, postId, picture, text) {
+    // DONE check the user exists, otherwise return false
+    // DONE check the post exists, otherwise return false
+    // DONE update the picture and/or text and return true
+
     let foundUser
 
     for (let i = 0; i < users.length; i++) {
@@ -142,8 +145,4 @@ function modifyPost(email, postId, picture, text) {
     foundPost.date = new Date
 
     return true
-}
-
-function toggleLikePost(email, postId) {
-
 }
