@@ -1,39 +1,39 @@
 function authenticateUser(email, password) {
-    var found
+    let foundUser
 
-    for (var i = 0; i < users.length; i++) {
-        var user = users[i]
+    for (let i = 0; i < users.length; i++) {
+        const user = users[i]
 
         if (user.email === email && user.password === password) {
-            found = user
+            foundUser = user
 
             break
         }
     }
 
-    if (found)
+    if (foundUser)
         return true
     else
         return false
 }
 
 function registerUser(name, email, password) {
-    var found
+    let foundUser
 
-    for (var i = 0; i < users.length; i++) {
+    for (let i = 0; i < users.length; i++) {
         var user = users[i]
 
         if (user.email === email) {
-            found = user
+            foundUser = user
 
             break
         }
     }
 
-    if (found)
+    if (foundUser)
         return false
     else {
-        var user = {}
+        const user = {}
 
         user.name = name
         user.email = email
@@ -46,23 +46,36 @@ function registerUser(name, email, password) {
 }
 
 function createPost(email, picture, text) {
-    var found
+    let foundUser
 
-    for (var i = 0; i < users.length; i++) {
+    for (let i = 0; i < users.length; i++) {
         var user = users[i]
 
         if (user.email === email) {
-            found = user
+            foundUser = user
 
             break
         }
     }
 
-    if (!found)
+    if (!foundUser)
         return false
 
     var post = {}
 
+    let id
+
+    if (!posts.length)
+        id = 'post-1'
+    else {
+        const last = posts[posts.length - 1]
+
+        const num = Number(last.id.slice(5))
+
+        id = 'post-' + (num + 1)
+    }
+
+    post.id = id
     post.user = email
     post.picture = picture
     post.text = text
@@ -74,20 +87,62 @@ function createPost(email, picture, text) {
 }
 
 function retrievePosts(email) {
-    var found
+    let foundUser
 
-    for (var i = 0; i < users.length; i++) {
+    for (let i = 0; i < users.length; i++) {
         var user = users[i]
 
         if (user.email === email) {
-            found = user
+            foundUser = user
 
             break
         }
     }
 
-    if (!found)
+    if (!foundUser)
         return false
 
     return posts
+}
+
+function modifyPost(email, postId, picture, text) {
+    // DONE check the user exists, otherwise return false
+    // DONE check the post exists, otherwise return false
+    // DONE update the picture and/or text and return true
+
+    let foundUser
+
+    for (let i = 0; i < users.length; i++) {
+        var user = users[i]
+
+        if (user.email === email) {
+            foundUser = user
+
+            break
+        }
+    }
+
+    if (!foundUser)
+        return false
+
+    var foundPost
+
+    for (let i = 0; i < posts.length; i++) {
+        var post = posts[i]
+
+        if (post.id === postId) {
+            foundPost = post
+
+            break
+        }
+    }
+
+    if (!foundPost)
+        return false
+
+    foundPost.picture = picture
+    foundPost.text = text
+    foundPost.date = new Date
+
+    return true
 }

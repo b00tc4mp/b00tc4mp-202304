@@ -29,7 +29,6 @@ users.push(user)
 
 var post = {}
 
-post.id = 'post-1'
 post.user = users[0].email
 post.text = 'hello world'
 post.picture = 'https://b00tc4mp.com/discord.png'
@@ -39,7 +38,6 @@ posts.push(post)
 
 var post = {}
 
-post.id = 'post-2'
 post.user = users[1].email
 post.text = 'hallo welt'
 post.picture = 'https://www.hallo-welt.io/wp-content/uploads/2021/05/HalloWelt-LOGO-1transparent-1.png'

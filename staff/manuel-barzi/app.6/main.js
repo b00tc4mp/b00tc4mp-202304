@@ -1,12 +1,12 @@
-const context = {}
+var context = {}
 
 document.querySelector('.login-page').querySelector('form').onsubmit = function (event) {
     event.preventDefault()
 
-    const email = event.target.email.value
-    const password = event.target.password.value
+    var email = event.target.email.value
+    var password = event.target.password.value
 
-    const authenticated = authenticateUser(email, password)
+    var authenticated = authenticateUser(email, password)
  
     if (authenticated) {
         context.email = email
@@ -35,11 +35,11 @@ document.querySelector('.register-page').querySelector('a').onclick = function (
 document.querySelector('.register-page').querySelector('form').onsubmit = function (event) {
     event.preventDefault()
 
-    const name = event.target.name.value
-    const email = event.target.email.value
-    const password = event.target.password.value
+    var name = event.target.name.value
+    var email = event.target.email.value
+    var password = event.target.password.value
 
-    const registered = registerUser(name, email, password)
+    var registered = registerUser(name, email, password)
 
     if (!registered)
         alert('user already exists')
@@ -64,10 +64,10 @@ document.querySelector('.home-page').querySelector('.post-modal').querySelector(
 document.querySelector('.home-page').querySelector('.post-modal').querySelector('.post-form').onsubmit = function(event) {
     event.preventDefault()
 
-    const picture = event.target.picture.value
-    const text = event.target.text.value
+    var picture = event.target.picture.value
+    var text = event.target.text.value
 
-    const created = createPost(context.email, picture, text)
+    var created = createPost(context.email, picture, text)
 
     if (created) {
         document.querySelector('.home-page').querySelector('.post-modal').classList.add('off')
@@ -80,49 +80,25 @@ document.querySelector('.home-page').querySelector('.post-modal').querySelector(
 function renderPosts() {
     document.querySelector('.home-page').querySelector('.home-posts').innerHTML = ''
 
-    const posts = retrievePosts(context.email)
+    var posts = retrievePosts(context.email)
 
-    for (let i = 0; i < posts.length; i++) {
-        const post = posts[i]
+    for (var i = 0; i < posts.length; i++) {
+        var post = posts[i]
 
-        const article = document.createElement('article')
+        var article = document.createElement('article')
         
-        const image = document.createElement('img')
+        var image = document.createElement('img')
         image.src = post.picture
         image.classList.add('post-image')
 
-        const paragraph = document.createElement('p')
+        var paragraph = document.createElement('p')
         paragraph.innerText = post.text
 
-        const time = document.createElement('time')
+        var time = document.createElement('time')
         time.innerText = post.date.toString()
 
-        const button = document.createElement('button')
-        button.innerText = 'Modify'
-        button.onclick = function() {
-            document.querySelector('.home-page').querySelector('.post-modify-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
-            document.querySelector('.home-page').querySelector('.post-modify-modal').classList.remove('off')
-        }
-        
-        article.append(image, paragraph, time, button)
+        article.append(image, paragraph, time)
 
         document.querySelector('.home-page').querySelector('.home-posts').append(article)
     }
-}
-
-document.querySelector('.home-page').querySelector('.post-modify-modal').querySelector('.post-form').onsubmit = function(event) {
-    event.preventDefault()
-
-    const postId = event.target.postId.value
-    const picture = event.target.picture.value
-    const text = event.target.text.value
-
-    const modified = modifyPost(context.email, postId, picture, text)
-
-    if (modified) {
-        document.querySelector('.home-page').querySelector('.post-modify-modal').classList.add('off')
-
-        renderPosts()
-    } else
-        alert('cannot create post')
 }
