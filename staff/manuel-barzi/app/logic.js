@@ -21,7 +21,7 @@ function registerUser(name, email, password) {
     let foundUser
 
     for (let i = 0; i < users.length; i++) {
-        var user = users[i]
+        const user = users[i]
 
         if (user.email === email) {
             foundUser = user
@@ -49,7 +49,7 @@ function createPost(email, picture, text) {
     let foundUser
 
     for (let i = 0; i < users.length; i++) {
-        var user = users[i]
+        const user = users[i]
 
         if (user.email === email) {
             foundUser = user
@@ -61,7 +61,7 @@ function createPost(email, picture, text) {
     if (!foundUser)
         return false
 
-    var post = {}
+    const post = {}
 
     let id
 
@@ -91,7 +91,7 @@ function retrievePosts(email) {
     let foundUser
 
     for (let i = 0; i < users.length; i++) {
-        var user = users[i]
+        const user = users[i]
 
         if (user.email === email) {
             foundUser = user
@@ -110,7 +110,7 @@ function modifyPost(email, postId, picture, text) {
     let foundUser
 
     for (let i = 0; i < users.length; i++) {
-        var user = users[i]
+        const user = users[i]
 
         if (user.email === email) {
             foundUser = user
@@ -122,10 +122,10 @@ function modifyPost(email, postId, picture, text) {
     if (!foundUser)
         return false
 
-    var foundPost
+    let foundPost
 
     for (let i = 0; i < posts.length; i++) {
-        var post = posts[i]
+        const post = posts[i]
 
         if (post.id === postId) {
             foundPost = post
@@ -145,5 +145,42 @@ function modifyPost(email, postId, picture, text) {
 }
 
 function toggleLikePost(email, postId) {
+    let foundUser
 
+    for (let i = 0; i < users.length; i++) {
+        const user = users[i]
+
+        if (user.email === email) {
+            foundUser = user
+
+            break
+        }
+    }
+
+    if (!foundUser)
+        return false
+
+    let foundPost
+
+    for (let i = 0; i < posts.length; i++) {
+        const post = posts[i]
+
+        if (post.id === postId) {
+            foundPost = post
+
+            break
+        }
+    }
+
+    if (!foundPost)
+        return false
+
+    const index = foundPost.likes.indexOf(context.email)
+
+    if (index < 0)
+        foundPost.likes.push(context.email)
+    else
+        foundPost.likes.splice(index, 1)
+
+    return true
 }

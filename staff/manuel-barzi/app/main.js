@@ -97,14 +97,25 @@ function renderPosts() {
         const time = document.createElement('time')
         time.innerText = post.date.toString()
 
-        const button = document.createElement('button')
-        button.innerText = 'Modify'
-        button.onclick = function() {
+        const like = document.createElement('button')
+        like.innerText = post.likes.includes(context.email)? '❤️' : '🤍'
+        like.onclick = function() {
+            const result = toggleLikePost(context.email, post.id)
+
+            if (!result)
+                alert('could not like post')
+            else
+                renderPosts()
+        }
+
+        const modify = document.createElement('button')
+        modify.innerText = 'Modify'
+        modify.onclick = function() {
             document.querySelector('.home-page').querySelector('.post-modify-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
             document.querySelector('.home-page').querySelector('.post-modify-modal').classList.remove('off')
         }
         
-        article.append(image, paragraph, time, button)
+        article.append(image, paragraph, time, like, modify)
 
         document.querySelector('.home-page').querySelector('.home-posts').append(article)
     }
