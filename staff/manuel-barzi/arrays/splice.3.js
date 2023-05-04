@@ -7,7 +7,15 @@ function splice(array, start, deleteCount, ...items) {
             array[start + i] = items[i]
         
         return []        
-    } else if (deleteCount > 0) {
+    } else if (deleteCount === 1) {
+        var removed = []
+
+        removed[removed.length] = array[start]
+
+        array[start] = items[0]
+
+        return removed
+    } else if (deleteCount > 1) {
         var removed = []
 
         for (var i = start; i < start + deleteCount; i++)
@@ -18,12 +26,10 @@ function splice(array, start, deleteCount, ...items) {
         for (var i = array.length - 1 ; i >= start + deleteCount; i--)
             array[i + displacement] = array[i]
 
-        if (displacement < 0)
-            array.length = array.length + displacement
-
         for (var i = 0; i < items.length; i++)
             array[start + i] = items[i]
         
+
         return removed
     }
 }
@@ -75,26 +81,6 @@ console.log(cars)
 var cars = ['vw', 'renault', 'audi', 'bmw', 'fiat']
 
 console.log(splice(cars, 1, 2, 'maseratti', 'bugatti', 'ferrari', 'rimac'))
-// expect ['renault', 'audi']
-
-console.log(cars)
-// expect ['vw', 'maseratti', 'bugatti', 'ferrari', 'rimac', 'fiat']
-
-// case 6
-
-var cars = ['vw', 'renault', 'audi', 'bmw', 'fiat']
-
-console.log(splice(cars, 1, 3, 'maseratti', 'bugatti'))
-// expect ['renault', 'audi']
-
-console.log(cars)
-// expect ['vw', 'maseratti', 'bugatti', 'ferrari', 'rimac', 'fiat']
-
-// case 7
-
-var cars = ['vw', 'renault', 'audi', 'bmw', 'fiat', 'lada']
-
-console.log(splice(cars, 1, 4, 'maseratti', 'bugatti'))
 // expect ['renault', 'audi']
 
 console.log(cars)
