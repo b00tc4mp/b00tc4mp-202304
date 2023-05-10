@@ -7,7 +7,7 @@ document.querySelector('.login-page').querySelector('form').onsubmit = function 
     const password = event.target.password.value
 
     const authenticated = authenticateUser(email, password)
- 
+
     if (authenticated) {
         context.email = email
 
@@ -51,17 +51,17 @@ document.querySelector('.register-page').querySelector('form').onsubmit = functi
     }
 }
 
-document.querySelector('.home-page').querySelector('.create-post-button').onclick = function() {
+document.querySelector('.home-page').querySelector('.create-post-button').onclick = function () {
     document.querySelector('.home-page').querySelector('.post-modal').classList.remove('off')
 }
 
-document.querySelector('.home-page').querySelector('.post-modal').querySelector('.cancel-button').onclick = function(event) {
+document.querySelector('.home-page').querySelector('.post-modal').querySelector('.cancel-button').onclick = function (event) {
     event.preventDefault()
 
     document.querySelector('.home-page').querySelector('.post-modal').classList.add('off')
 }
 
-document.querySelector('.home-page').querySelector('.post-modal').querySelector('.post-form').onsubmit = function(event) {
+document.querySelector('.home-page').querySelector('.post-modal').querySelector('.post-form').onsubmit = function (event) {
     event.preventDefault()
 
     const picture = event.target.picture.value
@@ -69,12 +69,13 @@ document.querySelector('.home-page').querySelector('.post-modal').querySelector(
 
     const created = createPost(context.email, picture, text)
 
-    if (created) {
+    if (!created)
+        alert('cannot create post')
+    else {
         document.querySelector('.home-page').querySelector('.post-modal').classList.add('off')
 
         renderPosts()
-    } else
-        alert('cannot create post')
+    }
 }
 
 function renderPosts() {
@@ -86,7 +87,7 @@ function renderPosts() {
         const post = posts[i]
 
         const article = document.createElement('article')
-        
+
         const image = document.createElement('img')
         image.src = post.picture
         image.classList.add('post-image')
@@ -98,8 +99,8 @@ function renderPosts() {
         time.innerText = post.date.toString()
 
         const like = document.createElement('button')
-        like.innerText = post.likes.includes(context.email)? '❤️' : '🤍'
-        like.onclick = function() {
+        like.innerText = (post.likes.includes(context.email) ? '❤️' : '🤍') + (post.likes.length ? ' (' + post.likes.length + ')' : '')
+        like.onclick = function () {
             const result = toggleLikePost(context.email, post.id)
 
             if (!result)
@@ -108,20 +109,36 @@ function renderPosts() {
                 renderPosts()
         }
 
-        const modify = document.createElement('button')
-        modify.innerText = 'Modify'
-        modify.onclick = function() {
-            document.querySelector('.home-page').querySelector('.post-modify-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
-            document.querySelector('.home-page').querySelector('.post-modify-modal').classList.remove('off')
+        article.append(image, paragraph, time, like)
+
+        if (post.user === context.email) {
+            const modify = document.createElement('button')
+            modify.innerText = 'Modify'
+            modify.onclick = function () {
+                document.querySelector('.home-page').querySelector('.post-modify-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
+                document.querySelector('.home-page').querySelector('.post-modify-modal').classList.remove('off')
+            }
+
+            const remove = document.createElement('button')
+            remove.innerText = 'remove'
+            remove.onclick = function () {
+                const removed = removePost(context.email, post.id)
+
+                if (!removed)
+                    alert('could not remove post')
+                else
+                    renderPosts()
+            }
+
+            
+            article.append(modify, remove)
         }
-        
-        article.append(image, paragraph, time, like, modify)
 
         document.querySelector('.home-page').querySelector('.home-posts').append(article)
     }
 }
 
-document.querySelector('.home-page').querySelector('.post-modify-modal').querySelector('.post-form').onsubmit = function(event) {
+document.querySelector('.home-page').querySelector('.post-modify-modal').querySelector('.post-form').onsubmit = function (event) {
     event.preventDefault()
 
     const postId = event.target.postId.value
@@ -130,10 +147,11 @@ document.querySelector('.home-page').querySelector('.post-modify-modal').querySe
 
     const modified = modifyPost(context.email, postId, picture, text)
 
-    if (modified) {
+    if (!modified)
+        alert('could not modify post')
+    else {
         document.querySelector('.home-page').querySelector('.post-modify-modal').classList.add('off')
 
         renderPosts()
-    } else
-        alert('cannot create post')
+    }
 }
