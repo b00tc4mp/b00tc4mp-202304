@@ -46,7 +46,7 @@
     </div>
 
     <div class="home-page off">
-        <header class="home-header">
+        <header>
             <h1>Hello, Home!</h1>
         </header>
 
@@ -56,7 +56,7 @@
             <button class="create-post-button">+</button>
         </footer>
 
-        <div class="modal create-post-modal off">
+        <div class="modal post-modal off">
             <form class="post-form">
                 <label for="picture">Picture</label>
                 <input type="url" name="picture" id="picture">
@@ -69,7 +69,7 @@
             </form>
         </div>
 
-        <div class="modal modify-post-modal off">
+        <div class="modal post-modify-modal off">
             <form class="post-form">
                 <input type="hidden" name="postId" />
                 
@@ -86,15 +86,7 @@
     </div>
 
     <script src="data.js"></script>
-
-    <script src="logic/authenticateUser.js"></script>
-    <script src="logic/registerUser.js"></script>
-    <script src="logic/createPost.js"></script>
-    <script src="logic/retrievePosts.js"></script>
-    <script src="logic/modifyPost.js"></script>
-    <script src="logic/removePost.js"></script>
-    <script src="logic/toggleLikePost.js"></script>
-
+    <script src="logic.js"></script>
     <script src="main.js"></script>
 </body>
 

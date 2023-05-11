@@ -52,16 +52,16 @@ document.querySelector('.register-page').querySelector('form').onsubmit = functi
 }
 
 document.querySelector('.home-page').querySelector('.create-post-button').onclick = function () {
-    document.querySelector('.home-page').querySelector('.create-post-modal').classList.remove('off')
+    document.querySelector('.home-page').querySelector('.post-modal').classList.remove('off')
 }
 
-document.querySelector('.home-page').querySelector('.create-post-modal').querySelector('.cancel-button').onclick = function (event) {
+document.querySelector('.home-page').querySelector('.post-modal').querySelector('.cancel-button').onclick = function (event) {
     event.preventDefault()
 
-    document.querySelector('.home-page').querySelector('.create-post-modal').classList.add('off')
+    document.querySelector('.home-page').querySelector('.post-modal').classList.add('off')
 }
 
-document.querySelector('.home-page').querySelector('.create-post-modal').querySelector('.post-form').onsubmit = function (event) {
+document.querySelector('.home-page').querySelector('.post-modal').querySelector('.post-form').onsubmit = function (event) {
     event.preventDefault()
 
     const picture = event.target.picture.value
@@ -72,8 +72,7 @@ document.querySelector('.home-page').querySelector('.create-post-modal').querySe
     if (!created)
         alert('cannot create post')
     else {
-        document.querySelector('.home-page').querySelector('.create-post-modal').querySelector('.post-form').reset()
-        document.querySelector('.home-page').querySelector('.create-post-modal').classList.add('off')
+        document.querySelector('.home-page').querySelector('.post-modal').classList.add('off')
 
         renderPosts()
     }
@@ -88,7 +87,6 @@ function renderPosts() {
         const post = posts[i]
 
         const article = document.createElement('article')
-        article.classList.add('post')
 
         const image = document.createElement('img')
         image.src = post.picture
@@ -117,10 +115,8 @@ function renderPosts() {
             const modify = document.createElement('button')
             modify.innerText = 'Modify'
             modify.onclick = function () {
-                document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
-                document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=picture]').value = post.picture
-                document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('textarea[name=text]').value = post.text
-                document.querySelector('.home-page').querySelector('.modify-post-modal').classList.remove('off')
+                document.querySelector('.home-page').querySelector('.post-modify-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
+                document.querySelector('.home-page').querySelector('.post-modify-modal').classList.remove('off')
             }
 
             const remove = document.createElement('button')
@@ -142,7 +138,7 @@ function renderPosts() {
     }
 }
 
-document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').onsubmit = function (event) {
+document.querySelector('.home-page').querySelector('.post-modify-modal').querySelector('.post-form').onsubmit = function (event) {
     event.preventDefault()
 
     const postId = event.target.postId.value
@@ -154,14 +150,8 @@ document.querySelector('.home-page').querySelector('.modify-post-modal').querySe
     if (!modified)
         alert('could not modify post')
     else {
-        document.querySelector('.home-page').querySelector('.modify-post-modal').classList.add('off')
+        document.querySelector('.home-page').querySelector('.post-modify-modal').classList.add('off')
 
         renderPosts()
     }
-}
-
-document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.cancel-button').onclick = function (event) {
-    event.preventDefault()
-
-    document.querySelector('.home-page').querySelector('.modify-post-modal').classList.add('off')
 }
