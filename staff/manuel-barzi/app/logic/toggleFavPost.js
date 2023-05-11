@@ -1,0 +1,3 @@
+function toggleFavPost(email, postId) {
+
+}

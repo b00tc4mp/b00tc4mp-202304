@@ -9,8 +9,6 @@ document.querySelector('.login-page').querySelector('form').onsubmit = function 
     const authenticated = authenticateUser(email, password)
 
     if (authenticated) {
-        document.querySelector('.login-page').querySelector('form').reset()
-
         context.email = email
 
         document.querySelector('.login-page').classList.add('off')
@@ -82,7 +80,7 @@ document.querySelector('.home-page').querySelector('.create-post-modal').querySe
 }
 
 function renderPosts() {
-    document.querySelector('.home-page').querySelector('.posts').innerHTML = ''
+    document.querySelector('.home-page').querySelector('.home-posts').innerHTML = ''
 
     const posts = retrievePosts(context.email)
 
@@ -102,9 +100,9 @@ function renderPosts() {
         const time = document.createElement('time')
         time.innerText = post.date.toString()
 
-        const likeButton = document.createElement('button')
-        likeButton.innerText = (post.likes.includes(context.email) ? '❤️' : '🤍') + (post.likes.length ? ' (' + post.likes.length + ')' : '')
-        likeButton.onclick = function () {
+        const like = document.createElement('button')
+        like.innerText = (post.likes.includes(context.email) ? '❤️' : '🤍') + (post.likes.length ? ' (' + post.likes.length + ')' : '')
+        like.onclick = function () {
             const result = toggleLikePost(context.email, post.id)
 
             if (!result)
@@ -113,21 +111,21 @@ function renderPosts() {
                 renderPosts()
         }
 
-        article.append(image, paragraph, time, likeButton)
+        article.append(image, paragraph, time, like)
 
         if (post.user === context.email) {
-            const modifyButton = document.createElement('button')
-            modifyButton.innerText = '📝'
-            modifyButton.onclick = function () {
+            const modify = document.createElement('button')
+            modify.innerText = 'Modify'
+            modify.onclick = function () {
                 document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
                 document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=picture]').value = post.picture
                 document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('textarea[name=text]').value = post.text
                 document.querySelector('.home-page').querySelector('.modify-post-modal').classList.remove('off')
             }
 
-            const removeButton = document.createElement('button')
-            removeButton.innerText = '🗑️'
-            removeButton.onclick = function () {
+            const remove = document.createElement('button')
+            remove.innerText = 'remove'
+            remove.onclick = function () {
                 const removed = removePost(context.email, post.id)
 
                 if (!removed)
@@ -135,16 +133,12 @@ function renderPosts() {
                 else
                     renderPosts()
             }
+
             
-            article.append(modifyButton, removeButton)
+            article.append(modify, remove)
         }
 
-        const favButton = document.createElement('button')
-        favButton.innerText = '✩'
-
-        article.append(favButton)
-
-        document.querySelector('.home-page').querySelector('.posts').append(article)
+        document.querySelector('.home-page').querySelector('.home-posts').append(article)
     }
 }
 
@@ -170,11 +164,4 @@ document.querySelector('.home-page').querySelector('.modify-post-modal').querySe
     event.preventDefault()
 
     document.querySelector('.home-page').querySelector('.modify-post-modal').classList.add('off')
-}
-
-document.querySelector('.home-page').querySelector('.home-header').querySelector('.logout-button').onclick = function() {
-    delete context.email
-
-    document.querySelector('.home-page').classList.add('off')
-    document.querySelector('.login-page').classList.remove('off')
 }

@@ -26,9 +26,6 @@ form {
     height: 50px;
     background-color: red;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
 }
 
 .home-footer {
@@ -38,15 +35,15 @@ form {
     background-color: red;
     width: 100%;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
 .create-post-button {
     height: 25px;
 }
 
-.posts {
+.home-posts {
     /* margin-top: 60px;
     margin-bottom: 60px; */
     margin: 60px 10px;
