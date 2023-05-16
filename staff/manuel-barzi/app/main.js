@@ -169,6 +169,13 @@ function renderPosts() {
 
         article.append(favButton)
 
+        if (post.user === context.email) {
+            const lockButton = document.createElement('button')
+            lockButton.innerText = '🔓'
+
+            article.append(lockButton)
+        }
+
         document.querySelector('.home-page').querySelector('.posts').append(article)
     }
 }
