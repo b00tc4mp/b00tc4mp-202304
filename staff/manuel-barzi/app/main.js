@@ -84,7 +84,15 @@ document.querySelector('.home-page').querySelector('.create-post-modal').querySe
 function renderPosts() {
     document.querySelector('.home-page').querySelector('.posts').innerHTML = ''
 
+    const user = retrieveUser(context.email)
+
+    if (!user)
+        alert('user does not exist')
+
     const posts = retrievePosts(context.email)
+
+    if (!posts)
+        alert('posts do not exist')
 
     for (let i = 0; i < posts.length; i++) {
         const post = posts[i]
@@ -92,6 +100,14 @@ function renderPosts() {
         const article = document.createElement('article')
         article.classList.add('post')
 
+        const postUser = retrieveUser(post.user)
+
+        if (!postUser)
+            alert('user does not exist')
+
+        const heading = document.createElement('h2')
+        heading.innerText = postUser.name
+        
         const image = document.createElement('img')
         image.src = post.picture
         image.classList.add('post-image')
@@ -113,7 +129,7 @@ function renderPosts() {
                 renderPosts()
         }
 
-        article.append(image, paragraph, time, likeButton)
+        article.append(heading, image, paragraph, time, likeButton)
 
         if (post.user === context.email) {
             const modifyButton = document.createElement('button')
@@ -135,12 +151,21 @@ function renderPosts() {
                 else
                     renderPosts()
             }
-            
+
             article.append(modifyButton, removeButton)
         }
 
         const favButton = document.createElement('button')
-        favButton.innerText = '✩'
+        favButton.innerText = user.favs.includes(post.id) ? '⭐️' : '✩'
+
+        favButton.onclick = function () {
+            const toggled = toggleFavPost(context.email, post.id)
+
+            if (!toggled)
+                alert('could not toggle fav post')
+            else
+                renderPosts()
+        }
 
         article.append(favButton)
 
@@ -172,7 +197,7 @@ document.querySelector('.home-page').querySelector('.modify-post-modal').querySe
     document.querySelector('.home-page').querySelector('.modify-post-modal').classList.add('off')
 }
 
-document.querySelector('.home-page').querySelector('.home-header').querySelector('.logout-button').onclick = function() {
+document.querySelector('.home-page').querySelector('.home-header').querySelector('.logout-button').onclick = function () {
     delete context.email
 
     document.querySelector('.home-page').classList.add('off')

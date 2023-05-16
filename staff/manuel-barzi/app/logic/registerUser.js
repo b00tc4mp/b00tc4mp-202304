@@ -19,6 +19,7 @@ function registerUser(name, email, password) {
         user.name = name
         user.email = email
         user.password = password
+        user.favs = []
 
         users.push(user)
 
