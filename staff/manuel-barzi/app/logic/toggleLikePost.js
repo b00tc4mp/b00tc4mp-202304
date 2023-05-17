@@ -1,40 +1,20 @@
 function toggleLikePost(email, postId) {
-    let foundUser
+    const user = users.find(user => user.email === email)
 
-    for (let i = 0; i < users.length; i++) {
-        const user = users[i]
-
-        if (user.email === email) {
-            foundUser = user
-
-            break
-        }
-    }
-
-    if (!foundUser)
+    if (!user)
         return false
 
-    let foundPost
+    const post = posts.find(post => post.id === postId)
 
-    for (let i = 0; i < posts.length; i++) {
-        const post = posts[i]
-
-        if (post.id === postId) {
-            foundPost = post
-
-            break
-        }
-    }
-
-    if (!foundPost)
+    if (!post)
         return false
 
-    const index = foundPost.likes.indexOf(context.email)
+    const index = post.likes.indexOf(context.email)
 
     if (index < 0)
-        foundPost.likes.push(context.email)
+        post.likes.push(context.email)
     else
-        foundPost.likes.splice(index, 1)
+        post.likes.splice(index, 1)
 
     return true
 }

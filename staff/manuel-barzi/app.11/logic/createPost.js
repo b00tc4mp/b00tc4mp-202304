@@ -1,7 +1,17 @@
 function createPost(email, picture, text) {
-    const user = users.find(user => user.email === email)
+    let foundUser
 
-    if (!user)
+    for (let i = 0; i < users.length; i++) {
+        const user = users[i]
+
+        if (user.email === email) {
+            foundUser = user
+
+            break
+        }
+    }
+
+    if (!foundUser)
         return false
 
     const post = {}

@@ -1,24 +1,14 @@
 function retrieveUser(email) {
-    let foundUser
+    const user = users.find(user => user.email === email)
 
-    for (let i = 0; i < users.length; i++) {
-        const user = users[i]
-
-        if (user.email === email) {
-            foundUser = user
-
-            break
-        }
-    }
-
-    if (!foundUser)
+    if (!user)
         return false
 
-    const user = {
-        name: foundUser.name,
-        email: foundUser.email,
-        favs: foundUser.favs
+    const _user = {
+        name: user.name,
+        email: user.email,
+        favs: user.favs
     }
 
-    return user
+    return _user
 }

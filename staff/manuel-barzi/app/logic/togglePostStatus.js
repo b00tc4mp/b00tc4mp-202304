@@ -1,4 +1,4 @@
-function removePost(email, postId) {
+function togglePostStatus(email, postId) {
     const user = users.find(user => user.email === email)
 
     if (!user)
@@ -12,9 +12,7 @@ function removePost(email, postId) {
     if (post.user !== email)
         return false
 
-    const index = posts.findIndex(post => post.id === postId)
-
-    posts.splice(index, 1)
+    post.status = post.status === 'public'? 'private' : 'public'
 
     return true
 }

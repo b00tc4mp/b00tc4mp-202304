@@ -47,13 +47,8 @@ form {
 }
 
 .posts {
-    margin: 60px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.fav-posts {
+    /* margin-top: 60px;
+    margin-bottom: 60px; */
     margin: 60px 10px;
     display: flex;
     flex-direction: column;
@@ -61,6 +56,9 @@ form {
 }
 
 .post {
+    /* border-width: 2px;
+    border-style: solid;
+    border-color: black; */
     border: 1px solid black;
     border-radius: 10px;
     margin: 10px;

@@ -1,25 +1,14 @@
 function registerUser(name, email, password) {
-    let foundUser
+    let user = users.find(user => user.email === email)
 
-    for (let i = 0; i < users.length; i++) {
-        const user = users[i]
-
-        if (user.email === email) {
-            foundUser = user
-
-            break
-        }
-    }
-
-    if (foundUser)
+    if (user)
         return false
     else {
-        const user = {}
+        user = {}
 
         user.name = name
         user.email = email
         user.password = password
-        user.favs = []
 
         users.push(user)
 

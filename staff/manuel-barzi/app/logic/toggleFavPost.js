@@ -1,40 +1,20 @@
 function toggleFavPost(email, postId) {
-    let foundUser
+    const user = users.find(user => user.email === email)
 
-    for (let i = 0; i < users.length; i++) {
-        const user = users[i]
-
-        if (user.email === email) {
-            foundUser = user
-
-            break
-        }
-    }
-
-    if (!foundUser)
+    if (!user)
         return false
 
-    let foundPost
+    const post = posts.find(post => post.id === postId)
 
-    for (let i = 0; i < posts.length; i++) {
-        const post = posts[i]
-
-        if (post.id === postId) {
-            foundPost = post
-
-            break
-        }
-    }
-
-    if (!foundPost)
+    if (!post)
         return false
 
-    const index = foundUser.favs.indexOf(postId)
+    const index = user.favs.indexOf(postId)
 
     if (index < 0)
-        foundUser.favs.push(postId)
+        user.favs.push(postId)
     else
-        foundUser.favs.splice(index, 1)
+        user.favs.splice(index, 1)
 
     return true
 }

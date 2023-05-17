@@ -97,86 +97,195 @@ function renderPosts() {
     for (let i = 0; i < posts.length; i++) {
         const post = posts[i]
 
-        const article = document.createElement('article')
-        article.classList.add('post')
+        if (post.user === context.email || (post.user !== context.email && post.status === 'public')) {
+            const article = document.createElement('article')
+            article.classList.add('post')
 
-        const postUser = retrieveUser(post.user)
+            const postUser = retrieveUser(post.user)
 
-        if (!postUser)
-            alert('user does not exist')
+            if (!postUser)
+                alert('user does not exist')
 
-        const heading = document.createElement('h2')
-        heading.innerText = postUser.name
-        
-        const image = document.createElement('img')
-        image.src = post.picture
-        image.classList.add('post-image')
+            const heading = document.createElement('h2')
+            heading.innerText = postUser.name
 
-        const paragraph = document.createElement('p')
-        paragraph.innerText = post.text
+            const image = document.createElement('img')
+            image.src = post.picture
+            image.classList.add('post-image')
 
-        const time = document.createElement('time')
-        time.innerText = post.date.toString()
+            const paragraph = document.createElement('p')
+            paragraph.innerText = post.text
 
-        const likeButton = document.createElement('button')
-        likeButton.innerText = (post.likes.includes(context.email) ? '❤️' : '🤍') + (post.likes.length ? ' (' + post.likes.length + ')' : '')
-        likeButton.onclick = function () {
-            const result = toggleLikePost(context.email, post.id)
+            const time = document.createElement('time')
+            time.innerText = post.date.toString()
 
-            if (!result)
-                alert('could not like post')
-            else
-                renderPosts()
-        }
+            const likeButton = document.createElement('button')
+            likeButton.innerText = (post.likes.includes(context.email) ? '❤️' : '🤍') + (post.likes.length ? ' (' + post.likes.length + ')' : '')
+            likeButton.onclick = function () {
+                const result = toggleLikePost(context.email, post.id)
 
-        article.append(heading, image, paragraph, time, likeButton)
-
-        if (post.user === context.email) {
-            const modifyButton = document.createElement('button')
-            modifyButton.innerText = '📝'
-            modifyButton.onclick = function () {
-                document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
-                document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=picture]').value = post.picture
-                document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('textarea[name=text]').value = post.text
-                document.querySelector('.home-page').querySelector('.modify-post-modal').classList.remove('off')
-            }
-
-            const removeButton = document.createElement('button')
-            removeButton.innerText = '🗑️'
-            removeButton.onclick = function () {
-                const removed = removePost(context.email, post.id)
-
-                if (!removed)
-                    alert('could not remove post')
+                if (!result)
+                    alert('could not like post')
                 else
                     renderPosts()
             }
 
-            article.append(modifyButton, removeButton)
+            const favButton = document.createElement('button')
+            favButton.innerText = user.favs.includes(post.id) ? '⭐️' : '✩'
+
+            favButton.onclick = function () {
+                const toggled = toggleFavPost(context.email, post.id)
+
+                if (!toggled)
+                    alert('could not toggle fav post')
+                else
+                    renderPosts()
+            }
+
+            article.append(heading, image, paragraph, time, likeButton, favButton)
+
+            if (post.user === context.email) {
+                const modifyButton = document.createElement('button')
+                modifyButton.innerText = '📝'
+                modifyButton.onclick = function () {
+                    document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
+                    document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=picture]').value = post.picture
+                    document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('textarea[name=text]').value = post.text
+                    document.querySelector('.home-page').querySelector('.modify-post-modal').classList.remove('off')
+                }
+
+                const removeButton = document.createElement('button')
+                removeButton.innerText = '🗑️'
+                removeButton.onclick = function () {
+                    const removed = removePost(context.email, post.id)
+
+                    if (!removed)
+                        alert('could not remove post')
+                    else
+                        renderPosts()
+                }
+
+                const lockButton = document.createElement('button')
+                lockButton.innerText = post.status === 'public' ? '🔓' : '🔐'
+
+                lockButton.onclick = function () {
+                    const toggled = togglePostStatus(context.email, post.id)
+
+                    if (!toggled)
+                        alert('could not toggle post status')
+                    else
+                        renderPosts()
+                }
+
+                article.append(modifyButton, removeButton, lockButton)
+            }
+
+            document.querySelector('.home-page').querySelector('.posts').append(article)
         }
+    }
+}
 
-        const favButton = document.createElement('button')
-        favButton.innerText = user.favs.includes(post.id) ? '⭐️' : '✩'
+function renderFavPosts() {
+    document.querySelector('.home-page').querySelector('.fav-posts').innerHTML = ''
 
-        favButton.onclick = function () {
-            const toggled = toggleFavPost(context.email, post.id)
+    const user = retrieveUser(context.email)
 
-            if (!toggled)
-                alert('could not toggle fav post')
-            else
-                renderPosts()
+    if (!user)
+        alert('user does not exist')
+
+    const posts = retrievePosts(context.email)
+
+    if (!posts)
+        alert('posts do not exist')
+
+    for (let i = 0; i < posts.length; i++) {
+        const post = posts[i]
+
+        if (user.favs.includes(post.id) && (post.user === context.email || (post.user !== context.email && post.status === 'public'))) {
+            const article = document.createElement('article')
+            article.classList.add('post')
+
+            const postUser = retrieveUser(post.user)
+
+            if (!postUser)
+                alert('user does not exist')
+
+            const heading = document.createElement('h2')
+            heading.innerText = postUser.name
+
+            const image = document.createElement('img')
+            image.src = post.picture
+            image.classList.add('post-image')
+
+            const paragraph = document.createElement('p')
+            paragraph.innerText = post.text
+
+            const time = document.createElement('time')
+            time.innerText = post.date.toString()
+
+            const likeButton = document.createElement('button')
+            likeButton.innerText = (post.likes.includes(context.email) ? '❤️' : '🤍') + (post.likes.length ? ' (' + post.likes.length + ')' : '')
+            likeButton.onclick = function () {
+                const result = toggleLikePost(context.email, post.id)
+
+                if (!result)
+                    alert('could not like post')
+                else
+                    renderFavPosts()
+            }
+
+            const favButton = document.createElement('button')
+            favButton.innerText = user.favs.includes(post.id) ? '⭐️' : '✩'
+
+            favButton.onclick = function () {
+                const toggled = toggleFavPost(context.email, post.id)
+
+                if (!toggled)
+                    alert('could not toggle fav post')
+                else
+                    renderFavPosts()
+            }
+
+            article.append(heading, image, paragraph, time, likeButton, favButton)
+
+            if (post.user === context.email) {
+                const modifyButton = document.createElement('button')
+                modifyButton.innerText = '📝'
+                modifyButton.onclick = function () {
+                    document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=postId]').value = post.id
+                    document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('input[name=picture]').value = post.picture
+                    document.querySelector('.home-page').querySelector('.modify-post-modal').querySelector('.post-form').querySelector('textarea[name=text]').value = post.text
+                    document.querySelector('.home-page').querySelector('.modify-post-modal').classList.remove('off')
+                }
+
+                const removeButton = document.createElement('button')
+                removeButton.innerText = '🗑️'
+                removeButton.onclick = function () {
+                    const removed = removePost(context.email, post.id)
+
+                    if (!removed)
+                        alert('could not remove post')
+                    else
+                        renderFavPosts()
+                }
+
+                const lockButton = document.createElement('button')
+                lockButton.innerText = post.status === 'public' ? '🔓' : '🔐'
+
+                lockButton.onclick = function () {
+                    const toggled = togglePostStatus(context.email, post.id)
+
+                    if (!toggled)
+                        alert('could not toggle post status')
+                    else
+                        renderFavPosts()
+                }
+
+                article.append(modifyButton, removeButton, lockButton)
+            }
+
+            document.querySelector('.home-page').querySelector('.fav-posts').append(article)
         }
-
-        article.append(favButton)
-
-        if (post.user === context.email) {
-            const lockButton = document.createElement('button')
-            lockButton.innerText = '🔓'
-
-            article.append(lockButton)
-        }
-
-        document.querySelector('.home-page').querySelector('.posts').append(article)
     }
 }
 
@@ -209,4 +318,20 @@ document.querySelector('.home-page').querySelector('.home-header').querySelector
 
     document.querySelector('.home-page').classList.add('off')
     document.querySelector('.login-page').classList.remove('off')
+}
+
+document.querySelector('.home-page').querySelector('.home-header').querySelector('.favs-link').onclick = event => {
+    event.preventDefault()
+
+    document.querySelector('.home-page').querySelector('.posts').classList.add('off')
+    document.querySelector('.home-page').querySelector('.fav-posts').classList.remove('off')
+
+    renderFavPosts()
+}
+
+document.querySelector('.home-page').querySelector('.home-header').querySelector('.title').onclick = () => {
+    document.querySelector('.home-page').querySelector('.fav-posts').classList.add('off')
+    document.querySelector('.home-page').querySelector('.posts').classList.remove('off')
+
+    renderPosts()
 }
