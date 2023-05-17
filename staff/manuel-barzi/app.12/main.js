@@ -97,7 +97,7 @@ function renderPosts() {
     for (let i = 0; i < posts.length; i++) {
         const post = posts[i]
 
-        if (post.user === context.email || (post.user !== context.email && post.visibility === 'public')) {
+        if (post.user === context.email || (post.user !== context.email && post.status === 'public')) {
             const article = document.createElement('article')
             article.classList.add('post')
 
@@ -166,10 +166,10 @@ function renderPosts() {
                 }
 
                 const lockButton = document.createElement('button')
-                lockButton.innerText = post.visibility === 'public' ? '🔓' : '🔐'
+                lockButton.innerText = post.status === 'public' ? '🔓' : '🔐'
 
                 lockButton.onclick = function () {
-                    const toggled = togglePostVisibility(context.email, post.id)
+                    const toggled = togglePostStatus(context.email, post.id)
 
                     if (!toggled)
                         alert('could not toggle post status')
@@ -201,7 +201,7 @@ function renderFavPosts() {
     for (let i = 0; i < posts.length; i++) {
         const post = posts[i]
 
-        if (user.favs.includes(post.id) && (post.user === context.email || (post.user !== context.email && post.visibility === 'public'))) {
+        if (user.favs.includes(post.id) && (post.user === context.email || (post.user !== context.email && post.status === 'public'))) {
             const article = document.createElement('article')
             article.classList.add('post')
 
@@ -270,10 +270,10 @@ function renderFavPosts() {
                 }
 
                 const lockButton = document.createElement('button')
-                lockButton.innerText = post.visibility === 'public' ? '🔓' : '🔐'
+                lockButton.innerText = post.status === 'public' ? '🔓' : '🔐'
 
                 lockButton.onclick = function () {
-                    const toggled = togglePostVisibility(context.email, post.id)
+                    const toggled = togglePostStatus(context.email, post.id)
 
                     if (!toggled)
                         alert('could not toggle post status')
