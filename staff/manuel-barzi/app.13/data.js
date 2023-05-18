@@ -32,7 +32,8 @@ posts.push({
     date: new Date,
     likes: ['peter@pan.com', 'wendy@darling.com'],
     visibility: 'public',
-    price: 1
+    onsale: true,
+    price: 10
 })
 
 posts.push({
@@ -43,7 +44,8 @@ posts.push({
     date: new Date,
     likes: ['james@hook.com'],
     visibility: 'public',
-    price: 2
+    onsale: false,
+    price: 0
 })
 
 posts.push({
@@ -54,7 +56,8 @@ posts.push({
     date: new Date,
     likes: [],
     visibility: 'public',
-    price: 3
+    onsale: false,
+    price: 0
 })
 
 posts.push({
@@ -65,16 +68,6 @@ posts.push({
     date: new Date,
     likes: ['peter@pan.com', 'wendy@darling.com'],
     visibility: 'public',
-    price: 0
-})
-
-posts.push({
-    id: 'post-5',
-    user: users[1].email,
-    text: 'hallo mazinger',
-    picture: 'https://www.academiataure.com/wp-content/uploads/2023/03/51835494125_aa196f488b_c-2.jpg',
-    date: new Date,
-    likes: ['james@hook.com'],
-    visibility: 'public',
-    price: 0
+    onsale: true,
+    price: 5
 })

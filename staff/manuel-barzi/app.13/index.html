@@ -47,17 +47,14 @@
 
     <div class="home-page off">
         <header class="home-header">
-            <h1 class="home-title">Hello, Home!</h1>
+            <h1 class="title">Hello, Home!</h1>
             <a class="favs-link" href="">Favs</a>
-            <a class="mine-link" href="">Mine</a>
             <button class="logout-button">Logout</button>
         </header>
 
         <main class="posts"></main>
 
         <main class="fav-posts off">hello favs</main>
-
-        <main class="mine-posts off">hello mines</main>
 
         <footer class="home-footer">
             <button class="create-post-button">+</button>
@@ -90,29 +87,6 @@
                 <button class="cancel-button">Cancel</button>
             </form>
         </div>
-
-        <div class="modal sell-post-modal off">
-            <form class="post-form">
-                <input type="hidden" name="postId" />
-                
-                <label for="price">Price</label>
-                <input type="number" name="price" id="price">
-
-                <button type="submit">Sell</button>
-                <button class="cancel-button">Cancel</button>
-            </form>
-        </div>
-
-        <div class="modal buy-post-modal off">
-            <form class="post-form">
-                <input type="hidden" name="postId" />
-                
-                <p>You are to buy this post for the price of <span>100</span> $</p>
-
-                <button type="submit">Buy</button>
-                <button class="cancel-button">Cancel</button>
-            </form>
-        </div>
     </div>
 
     <script src="data.js"></script>
@@ -127,8 +101,6 @@
     <script src="logic/toggleFavPost.js"></script>
     <script src="logic/retrieveUser.js"></script>
     <script src="logic/togglePostVisibility.js"></script>
-    <script src="logic/sellPost.js"></script>
-    <script src="logic/buyPost.js"></script>
 
     <script src="main.js"></script>
 </body>
