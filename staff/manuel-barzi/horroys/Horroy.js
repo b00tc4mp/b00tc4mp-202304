@@ -22,11 +22,30 @@ Horroy.prototype.filter = function (callback) {
     return filtered
 }
 
-Horroy.prototype.push = function(...elements) {
+Horroy.prototype.push = function (...elements) {
     for (let i = 0; i < elements.length; i++) {
         this[this.length] = elements[i]
         this.length++
     }
 
     return this.length
+}
+
+Horroy.prototype.group = function (callback) {
+    var result = {}
+
+    for (var i = 0; i < this.length; i++) {
+        var element = this[i]
+
+        var property = callback(element)
+
+        if (!result[property])
+            result[property] = new Horroy
+
+        var h = result[property]
+        h[h.length] = element
+        h.length++
+    }
+
+    return result
 }
