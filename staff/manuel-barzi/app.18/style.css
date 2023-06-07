@@ -1,0 +1,109 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    cursor: pointer;
+}
+
+.register-page {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.login-page {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.home-header {
+    position: fixed;
+    top: 0;
+    height: 50px;
+    background-color: red;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.home-title {
+    cursor: pointer;
+}
+
+.home-footer {
+    position: fixed;
+    bottom: 0;
+    height: 50px;
+    background-color: red;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-post-button {
+    height: 25px;
+}
+
+.posts {
+    margin: 60px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fav-posts {
+    margin: 60px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mine-posts {
+    margin: 60px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    max-width: 450px;
+}
+
+.post-form {
+    background-color: white;
+    padding: 10px;
+}
+
+.post-image {
+    width: 100px;
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.75);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.off {
+    display: none;
+}
