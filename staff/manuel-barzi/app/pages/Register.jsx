@@ -6,7 +6,15 @@ function Register(props) {
         const email = event.target.email.value
         const password = event.target.password.value
 
-        console.log(name, email, password)
+        const registered = registerUser(name, email, password)
+
+        if (!registered)
+            alert('user already exists')
+        else {
+            alert('User registered')
+
+            props.onRegistered()
+        }
     }
 
     const handleGoToLogin = function (event) {

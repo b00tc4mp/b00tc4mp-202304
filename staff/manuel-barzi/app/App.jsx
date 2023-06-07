@@ -8,10 +8,13 @@ function App() {
 
     const handleGoToLogin = () => setView('login')
 
+    const handleLoggedIn = () => setView('home')
+
     console.log('App -> render')
 
     return <>
-        {view === 'login' && <Login onGoToRegister={handleGoToRegister} />}
-        {view === 'register' && <Register onGoToLogin={handleGoToLogin} />}
+        {view === 'login' && <Login onGoToRegister={handleGoToRegister} onLoggedIn={handleLoggedIn} />}
+        {view === 'register' && <Register onGoToLogin={handleGoToLogin} onRegistered={handleGoToLogin} />}
+        {view === 'home' && <Home />}
     </>
 }

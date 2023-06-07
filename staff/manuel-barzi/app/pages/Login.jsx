@@ -5,7 +5,15 @@ function Login(props) {
         const email = event.target.email.value
         const password = event.target.password.value
 
-        console.log(email, password)
+        const authenticated = authenticateUser(email, password)
+
+        if (!authenticated)
+            alert('Wrong credentials')
+        else {
+            context.email = email
+
+            props.onLoggedIn()
+        }
     }
 
     const hangleGoToRegister = event => {
