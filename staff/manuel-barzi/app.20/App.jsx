@@ -15,6 +15,6 @@ function App() {
     return <>
         {view === 'login' && <Login onGoToRegister={handleGoToRegister} onLoggedIn={handleLoggedIn} />}
         {view === 'register' && <Register onGoToLogin={handleGoToLogin} onRegistered={handleGoToLogin} />}
-        {view === 'home' && <Home onLoggedOut={handleGoToLogin} />}
+        {view === 'home' && <Home />}
     </>
 }
