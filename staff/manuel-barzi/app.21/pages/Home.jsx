@@ -15,10 +15,6 @@ function Home(props) {
     const favs = favsState[0]
     const setFavs = favsState[1]
 
-    const modalState = React.useState(null)
-    const modal = modalState[0]
-    const setModal = modalState[1]
-
     React.useEffect(() => {
         const all = retrievePosts(context.email)
         setAll(all)
@@ -54,18 +50,6 @@ function Home(props) {
         const all = retrievePosts(context.email)
         setAll(all)
         setView('all')
-    }
-
-    const handleOpenCreatePostModal = () => setModal('create-post')
-
-    const handleCancelCreatePost = () => setModal(null)
-
-    const handlePostCreated = () => {
-        const all = retrievePosts(context.email)
-
-        setAll(all)
-        setView('all')
-        setModal(null)
     }
 
     console.log('Home -> render')
@@ -118,10 +102,21 @@ function Home(props) {
         </main>}
 
         <footer className="home-footer">
-            <button className="create-post-button" onClick={handleOpenCreatePostModal}>+</button>
+            <button className="create-post-button">+</button>
         </footer>
 
-        {modal === 'create-post' && <CreatePostModal onCancel={handleCancelCreatePost} onCreated={handlePostCreated} />}
+        <div className="modal create-post-modal off">
+            <form className="post-form">
+                <label htmlFor="picture">Picture</label>
+                <input type="url" name="picture" id="picture"></input>
+
+                <label htmlFor="text">Text</label>
+                <textarea name="text"></textarea>
+
+                <button type="submit">Create</button>
+                <button className="cancel-button">Cancel</button>
+            </form>
+        </div>
 
         <div className="modal modify-post-modal off">
             <form className="post-form">
