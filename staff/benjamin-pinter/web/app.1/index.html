@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Albania frfr</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="register off">
+        <h1>Register to become a real Albanian🇦🇱</h1>
+        <p>Please register now!</p>
+        <form>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required>
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email" required>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+            <hr>
+            <button type="submit" class="registerbutton">Register for Albanian Citizenship</button>
+        </form>
+        <a href="" class="style">Login</a>
+    </div>
+    <div class="login">
+        <h1>Login to purchase construction equipment</h1>
+        <p>Please login now!</p>
+        <form>
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="email" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <hr>
+        <button type="submit" class="loginbutton">Login</button>
+        </form>
+        <a href="" class="style">Register</a>
+    </div>
+    <div class="welcome off">
+        <header class ="welcome-header">
+            <h1 class="headline">Welcome</h1>
+            <a href="" class="mine-link">🫵</a>
+            <a href="" class="star">⭐️</a>
+            <button class="logout-button">Logout</button>
+        </header>
+
+        <main class="home-posts"></main>
+
+        <main class="fav-posts off"></main>
+
+        <main class="mine-posts off"></main>
+
+        <footer class="welcome-footer">
+            <button class="create-button">+</button>
+        </footer>
+        <div class="modal modal-post off">
+          <form class="post-form">
+                <label for="picture">Picture</label>
+                <input type="url" name="picture" id="picture">
+
+                <label for="text">Text</label>
+                <textarea name="text"></textarea>
+
+                <button type="submit">Share</button>
+                <button class="cancel">Cancel</button>
+          </form>
+        </div>
+
+        <div class="modal modal-modify off">
+            <form class="post-form">
+                  <input type="hidden" name="postId" />
+                  
+                  <label for="picture">Picture</label>
+                  <input type="url" name="picture" id="picture">
+  
+                  <label for="text">Text</label>
+                  <textarea name="text"></textarea>
+  
+                  <button type="submit">Modify</button>
+                  <button class="cancel">Cancel</button>
+            </form>
+        </div>
+
+        <div class="modal modal-sell off">
+            <form class="post-form">
+                  <input type="hidden" name="postId" />
+
+                  <label for="price">Price</label>
+                  <input type="number" name="price" id ="price">
+  
+                  <button type="submit">Sell</button>
+                  <button class="cancel">Cancel</button>
+            </form>
+        </div>
+
+        <div class="modal modal-buy off">
+            <form class="post-form">
+                  <input type="hidden" name="postId" />
+                  
+                  <p>Buy this Post for <span></span>€?</p>
+  
+                  <button type="submit">Buy</button>
+                  <button class="cancel">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <script src="data.js"></script>
+
+    <script src="logic/authenticateUser.js"></script>
+    <script src="logic/createPost.js"></script>
+    <script src="logic/modifyPost.js"></script>
+    <script src="logic/registerUser.js"></script>
+    <script src="logic/removePost.js"></script>
+    <script src="logic/retrievePost.js"></script>
+    <script src="logic/toggleLikePost.js"></script>
+    <script src="logic/toggleFavPost.js"></script>
+    <script src="logic/retrieveUser.js"></script>
+    <script src="logic/togglePostVisibility.js"></script>
+    <script src="logic/sellPost.js"></script>
+    <script src="logic/buyPost.js"></script>
+
+    <script src="main.js"></script>
+</body>
+</html>
