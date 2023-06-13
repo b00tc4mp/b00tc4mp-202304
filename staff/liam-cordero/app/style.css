@@ -1,0 +1,58 @@
+html,body {
+    margin: 0;
+}
+h2 {
+    margin-top: 0;
+    font-style: oblique;
+}
+
+.register {
+
+    background-color: rgb(211, 21, 21);
+    border-radius: 10 px;
+   
+}
+
+.login {
+    background-color: purple;
+}
+.form {
+    display: flex;
+}
+
+.home-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.upload-form {
+    background-color: white;
+    padding: 10px;
+}
+
+.post-image {
+    width: 100px;
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.75);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.home-footer {
+    background-color: lavender;
+}
+
+.home-header {
+    background-color: lavender ;
+    
+}
+.off {
+    display: none;
+}
