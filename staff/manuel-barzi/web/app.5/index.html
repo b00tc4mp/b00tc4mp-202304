@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="register-page off">
+        <h1>Register</h1>
+
+        <form>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name">
+
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email">
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+
+            <button type="submit">Regsiter</button>
+        </form>
+
+        <a href="">Login</a>
+    </div>
+
+    <div class="login-page off">
+        <h1>Login</h1>
+
+        <form>
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email">
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+
+            <button type="submit">Login</button>
+        </form>
+
+        <a href="">Register</a>
+    </div>
+
+    <div class="home-page _off">
+        <header>
+            <h1>Hello, Home!</h1>
+        </header>
+
+        <footer class="home-footer">
+            <button class="create-post-button">+</button>
+        </footer>
+
+        <div class="modal post-modal off">
+            <form class="post-form">
+                <label for="picture">Picture</label>
+                <input type="url" name="picture" id="picture">
+
+                <label for="text">Text</label>
+                <textarea name="text"></textarea>
+
+                <button type="submit">Create</button>
+                <button class="cancel-button">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

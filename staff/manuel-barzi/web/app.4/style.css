@@ -1,0 +1,23 @@
+div {
+    background-color: lightblue;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-page {
+    background-color: aqua;
+}
+
+.login-page {
+    background-color: aquamarine;
+}
+
+.off {
+    display: none;
+}
