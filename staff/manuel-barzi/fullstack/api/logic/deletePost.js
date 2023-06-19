@@ -1,9 +1,8 @@
 const { readFile, writeFile } = require('fs')
 
-function createPost(userId, image, text, callback) {
+function deletePost(userId, postId, callback) {
     if (typeof userId !== 'number') throw new Error('userId is not a number')
-    if (typeof image !== 'string') throw new Error('image is not a string')
-    if (typeof text !== 'string') throw new Error('text is not a string')
+    if (typeof postId !== 'number') throw new Error('postId is not a number')
     if (typeof callback !== 'function') throw new Error('callback is not a function')
 
     readFile('data/users.json', (error, json) => {
@@ -32,23 +31,23 @@ function createPost(userId, image, text, callback) {
 
             const posts = JSON.parse(json)
 
-            let id = 1
+            const index = posts.findIndex(post => post.id === postId)
 
-            if (posts.length) {
-                const last = posts[posts.length - 1]
+            const post = posts[index]
 
-                id = last.id + 1
+            if (!post) {
+                callback(new Error('post not found'))
+
+                return
             }
 
-            const post = {
-                id,
-                author: userId,
-                image,
-                text,
-                date: new Date
+            if (post.author !== userId) {
+                callback(new Error('user is not the author of the post'))
+
+                return
             }
 
-            posts.push(post)
+            posts.splice(index, 1)
 
             const json2 = JSON.stringify(posts)
 
@@ -65,4 +64,4 @@ function createPost(userId, image, text, callback) {
     })
 }
 
-module.exports = createPost
+module.exports = deletePost

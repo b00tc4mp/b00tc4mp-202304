@@ -1,7 +1,12 @@
-const fs = require('fs')
+const { readFile, writeFile } = require('fs')
 
 function registerUser(name, email, password, callback) {
-    fs.readFile('data/users.json', (error, json) => {
+    if (typeof name !== 'string') throw new Error('name is not a string')
+    if (typeof email !== 'string') throw new Error('email is not a string')
+    if (typeof password !== 'string') throw new Error('password is not a string')
+    if (typeof callback !== 'function') throw new Error('callback is not a function')
+
+    readFile('data/users.json', (error, json) => {
         if (error) {
             callback(error)
 
@@ -18,13 +23,21 @@ function registerUser(name, email, password, callback) {
             return
         }
 
-        const user = { name, email, password }
+        let id = 1
+
+        if (users.length) {
+            const last = users[users.length - 1]
+
+            id = last.id + 1
+        }
+
+        const user = { id, name, email, password }
 
         users.push(user)
 
         const json2 = JSON.stringify(users)
 
-        fs.writeFile('data/users.json', json2, error => {
+        writeFile('data/users.json', json2, error => {
             if (error) {
                 callback(error)
 

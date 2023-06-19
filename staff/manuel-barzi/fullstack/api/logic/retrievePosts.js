@@ -1,6 +1,6 @@
 const { readFile } = require('fs')
 
-function retrieveUser(userId, callback) {
+function retrievePosts(userId, callback) {
     if (typeof userId !== 'number') throw new Error('userId is not a number')
     if (typeof callback !== 'function') throw new Error('callback is not a function')
 
@@ -21,10 +21,26 @@ function retrieveUser(userId, callback) {
             return
         }
 
-        delete user.password
+        readFile('data/posts.json', (error, json) => {
+            if (error) {
+                callback(error)
 
-        callback(null, user)
+                return
+            }
+
+            const posts = JSON.parse(json)
+
+            posts.forEach(post => {
+                const user = users.find(user => user.id === post.author)
+
+                const { id, name } = user
+
+                post.author = { id, name }
+            })
+
+            callback(null, posts)
+        })
     })
 }
 
-module.exports = retrieveUser
+module.exports = retrievePosts
