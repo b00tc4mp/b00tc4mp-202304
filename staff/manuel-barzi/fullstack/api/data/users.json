@@ -22,5 +22,29 @@
         "name": "Wendy Darling",
         "email": "wendy@darling.com",
         "password": "123123123"
+    },
+    {
+        "id": 5,
+        "name": "Liam Cordero",
+        "email": "liam@cordero.com",
+        "password": "123123123"
+    },
+    {
+        "id": 6,
+        "name": "Gi Rafe",
+        "email": "gi@rafe.com",
+        "password": "123123123"
+    },
+    {
+        "id": 7,
+        "name": "Li On",
+        "email": "li@on.com",
+        "password": "123123123"
+    },
+    {
+        "id": 8,
+        "name": "Ele Phant",
+        "email": "ele@phant.com",
+        "password": "123123123"
     }
 ]

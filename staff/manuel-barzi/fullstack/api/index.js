@@ -6,8 +6,13 @@ const createPost = require('./logic/createPost')
 const retrievePosts = require('./logic/retrievePosts')
 const updatePost = require('./logic/updatePost')
 const deletePost = require('./logic/deletePost')
+const cors = require('cors')
 
 const api = express()
+
+api.use(cors())
+
+api.get('/', (req, res) => res.send('Hello, API!'))
 
 api.post('/users', (req, res) => {
     let json = ''
@@ -16,6 +21,14 @@ api.post('/users', (req, res) => {
 
     req.on('end', () => {
         try {
+            // const user = JSON.parse(json)
+            // const name = user.name
+            // const email = user.email
+            // const password = user.password
+
+            // const user = JSON.parse(json)
+            // const { name, email, password } = user
+
             const { name, email, password } = JSON.parse(json)
 
             registerUser(name, email, password, error => {
@@ -177,4 +190,4 @@ api.delete('/posts/:postId', (req, res) => {
     }
 })
 
-api.listen(8080, () => console.log('server up'))
+api.listen(8080, () => console.log('server listening in port 8080'))
