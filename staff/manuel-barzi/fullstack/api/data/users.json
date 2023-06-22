@@ -1,1 +1,26 @@
-[{"id":1,"name":"Po Tato","email":"po@tato.com","password":"123123123"},{"id":2,"name":"Po Tato","email":"po@tato2.com","password":"123123123"}]
+[
+    {
+        "id": 1,
+        "name": "Po Tato",
+        "email": "po@tato.com",
+        "password": "123123123"
+    },
+    {
+        "id": 2,
+        "name": "Po Tato",
+        "email": "po@tato2.com",
+        "password": "123123123"
+    },
+    {
+        "id": 3,
+        "name": "Peter Pan",
+        "email": "peter@pan.com",
+        "password": "123123123"
+    },
+    {
+        "id": 4,
+        "name": "Wendy Darling",
+        "email": "wendy@darling.com",
+        "password": "123123123"
+    }
+]
