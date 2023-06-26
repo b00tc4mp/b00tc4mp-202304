@@ -58,7 +58,7 @@ function Home(props) {
     }, [])
 
     const handleLogout = () => {
-        context.userId = null
+        delete context.email
 
         props.onLoggedOut()
     }

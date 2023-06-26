@@ -6,12 +6,6 @@
         "password": "123123123"
     },
     {
-        "id": 2,
-        "name": "Po Tato",
-        "email": "po@tato2.com",
-        "password": "123123123"
-    },
-    {
         "id": 3,
         "name": "Peter Pan",
         "email": "peter@pan.com",
@@ -45,6 +39,12 @@
         "id": 8,
         "name": "Ele Phant",
         "email": "ele@phant.com",
+        "password": "123123123"
+    },
+    {
+        "id": 9,
+        "name": "Pin Ocho",
+        "email": "pin@ocho.com",
         "password": "123123123"
     }
 ]

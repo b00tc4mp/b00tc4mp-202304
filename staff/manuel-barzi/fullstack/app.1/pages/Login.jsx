@@ -31,7 +31,7 @@ function Login(props) {
     }
 
     return <div className="login-page _off">
-        <h1>Login 3</h1>
+        <h1>Login</h1>
 
         <form onSubmit={handleLogin}>
             <label htmlFor="email">E-mail</label>
