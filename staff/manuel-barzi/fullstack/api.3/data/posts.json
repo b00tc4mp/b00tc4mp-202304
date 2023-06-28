@@ -1,0 +1,93 @@
+[
+    {
+        "id": 1,
+        "author": 1,
+        "image": "new image",
+        "text": "new text",
+        "date": "2023-06-19T21:26:42.084Z"
+    },
+    {
+        "id": 2,
+        "author": 1,
+        "image": "https://nice.image.com",
+        "text": "hello image",
+        "date": "2023-06-19T21:09:27.892Z"
+    },
+    {
+        "id": 5,
+        "author": 1,
+        "image": "https://nice.image.com",
+        "text": "hello image",
+        "date": "2023-06-19T21:19:28.436Z"
+    },
+    {
+        "id": 6,
+        "author": 1,
+        "image": "https://img.uxwing.com/wp-content/themes/uxwing/download/emoji-emoticon/smile-icon.png",
+        "text": "Smile :)",
+        "date": "2023-06-21T13:34:14.155Z"
+    },
+    {
+        "id": 7,
+        "author": 1,
+        "image": "https://t4.ftcdn.net/jpg/02/42/18/37/360_F_242183761_BaDpHZaxSBVIFhgSCNS2w8mEvdu3Oy6Q.jpg",
+        "text": "smile",
+        "date": "2023-06-26T13:07:56.455Z"
+    },
+    {
+        "id": 8,
+        "author": 1,
+        "image": "https://t4.ftcdn.net/jpg/02/42/18/37/360_F_242183761_BaDpHZaxSBVIFhgSCNS2w8mEvdu3Oy6Q.jpg",
+        "text": "smile",
+        "date": "2023-06-26T13:08:00.267Z"
+    },
+    {
+        "id": 9,
+        "author": 1,
+        "image": "https://t4.ftcdn.net/jpg/02/42/18/37/360_F_242183761_BaDpHZaxSBVIFhgSCNS2w8mEvdu3Oy6Q.jpg",
+        "text": "smile",
+        "date": "2023-06-26T13:08:08.898Z"
+    },
+    {
+        "id": 10,
+        "author": 1,
+        "image": "https://t4.ftcdn.net/jpg/02/42/18/37/360_F_242183761_BaDpHZaxSBVIFhgSCNS2w8mEvdu3Oy6Q.jpg",
+        "text": "smile",
+        "date": "2023-06-26T13:11:35.948Z"
+    },
+    {
+        "id": 11,
+        "author": 1,
+        "image": "https://t4.ftcdn.net/jpg/02/42/18/37/360_F_242183761_BaDpHZaxSBVIFhgSCNS2w8mEvdu3Oy6Q.jpg",
+        "text": "smile",
+        "date": "2023-06-26T13:11:38.097Z"
+    },
+    {
+        "id": 12,
+        "author": 1,
+        "image": "https://t4.ftcdn.net/jpg/02/42/18/37/360_F_242183761_BaDpHZaxSBVIFhgSCNS2w8mEvdu3Oy6Q.jpg",
+        "text": "smile",
+        "date": "2023-06-26T13:11:38.877Z"
+    },
+    {
+        "id": 13,
+        "author": 3,
+        "image": "https://picsum.photos/1500?random=1",
+        "text": "random foto",
+        "date": "2023-06-26T13:26:45.189Z"
+    },
+    {
+        "id": 14,
+        "author": 3,
+        "image": "https://www.begood.lat/wp-content/uploads/2021/01/LogoBegood.png",
+        "text": "dunno",
+        "date": "2023-06-26T13:27:44.027Z"
+    },
+    {
+        "id": 15,
+        "author": 4,
+        "image": "https://picsum.photos/1500?random=1",
+        "text": "random",
+        "date": "2023-06-26T13:28:16.748Z"
+    }
+]

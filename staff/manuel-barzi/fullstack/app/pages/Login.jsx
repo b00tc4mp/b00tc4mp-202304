@@ -30,8 +30,8 @@ function Login(props) {
         props.onGoToRegister()
     }
 
-    return <div className="login-page _off">
-        <h1>Login 3</h1>
+    return <div className="login-page">
+        <h1>Login</h1>
 
         <form onSubmit={handleLogin}>
             <label htmlFor="email">E-mail</label>
