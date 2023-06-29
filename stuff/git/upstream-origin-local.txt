@@ -1,0 +1,15 @@
+upstream/repo -> origin/repo: fork
+origin/repo -> local/repo: clone
+local/repo -> local/repo: add changes (files & folders)
+local/repo -> local/repo: commit -m "..."
+local/repo -> origin/repo: push
+origin/repo -> upstream/repo: pull request
+upstream/repo -> upstream/repo: code review
+local/repo -> local/repo: add changes (files & folders)
+local/repo -> local/repo: commit -m "..."
+local/repo -> origin/repo: push
+origin/repo -> upstream/repo: automatically updates pull request
+upstream/repo -> upstream/repo: code review
+upstream/repo -> upstream/repo: merge pull request
+upstream/repo -> origin/repo: sync fork
+origin/repo -> local/repo: pull
