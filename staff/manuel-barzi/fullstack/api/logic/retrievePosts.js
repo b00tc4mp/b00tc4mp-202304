@@ -1,46 +1,28 @@
-const { readFile } = require('fs')
+const context = require('./context')
+const { ObjectId } = require('mongodb')
 
-function retrievePosts(userId, callback) {
-    if (typeof userId !== 'number') throw new Error('userId is not a number')
-    if (typeof callback !== 'function') throw new Error('callback is not a function')
+function retrievePosts(userId) {
+    if (typeof userId !== 'string') throw new Error('userId is not a string')
 
-    readFile('data/users.json', (error, json) => {
-        if (error) {
-            callback(error)
+    const { users, posts } = context
 
-            return
-        }
+    return users.findOne({ _id: new ObjectId(userId) })
+        .then(user => {
+            if (!user) throw new Error('user not found')
 
-        const users = JSON.parse(json)
-
-        const user = users.find(user => user.id === userId)
-
-        if (!user) {
-            callback(new Error('user not found'))
-
-            return
-        }
-
-        readFile('data/posts.json', (error, json) => {
-            if (error) {
-                callback(error)
-
-                return
-            }
-
-            const posts = JSON.parse(json)
-
+            return posts.find().toArray()
+        })
+        .then(posts => {
+            // sanitize
             posts.forEach(post => {
-                const user = users.find(user => user.id === post.author)
+                post.id = post._id.toString()
+                delete post._id
 
-                const { id, name } = user
-
-                post.author = { id, name }
+                post.author = post.author.toString()
             })
 
-            callback(null, posts)
+            return posts
         })
-    })
 }
 
 module.exports = retrievePosts

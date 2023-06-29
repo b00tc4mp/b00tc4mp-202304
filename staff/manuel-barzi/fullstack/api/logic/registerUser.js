@@ -1,6 +1,5 @@
 const context = require('./context')
 
-
 function registerUser(name, email, password) {
     if (typeof name !== 'string') throw new Error('name is not a string')
     if (typeof email !== 'string') throw new Error('email is not a string')
