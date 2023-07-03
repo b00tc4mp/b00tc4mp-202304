@@ -1,5 +1,5 @@
 const mongodb = require('mongodb')
-const deletePost = require('./deletePost')
+const retrieveUser = require('./retrieveUser')
 const context = require('./context')
 
 const { MongoClient } = mongodb
@@ -17,8 +17,8 @@ client.connect()
         context.posts = posts
 
         try {
-            return deletePost('64a33c894e3ac5af1e1113ca', '64a33caa4e3ac5af1e1113cb')
-                .then(() => console.log('post deleted'))
+            return retrieveUser('649d7c76782a6ca030d68f42')
+                .then(user => console.log(user))
                 .catch(error => console.error(error))
         } catch (error) {
             console.error(error)

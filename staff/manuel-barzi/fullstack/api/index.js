@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express')
 const registerUser = require('./logic/registerUser')
 const authenticateUser = require('./logic/authenticateUser')
@@ -9,10 +11,13 @@ const deletePost = require('./logic/deletePost')
 const cors = require('cors')
 const mongodb = require('mongodb')
 const context = require('./logic/context')
+const bodyParser = require('body-parser')
+
+const jsonBodyParser = bodyParser.json()
 
 const { MongoClient } = mongodb
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
+const client = new MongoClient(process.env.DB)
 
 client.connect()
     .then(connection => {
@@ -30,40 +35,28 @@ client.connect()
 
         api.get('/', (req, res) => res.send('Hello, API!'))
 
-        api.post('/users', (req, res) => {
-            let json = ''
+        api.post('/users', jsonBodyParser, (req, res) => {
+            try {
+                const { name, email, password } = req.body
 
-            req.on('data', chunk => json += chunk)
-
-            req.on('end', () => {
-                try {
-                    const { name, email, password } = JSON.parse(json)
-
-                    registerUser(name, email, password)
-                        .then(() => res.status(201).send())
-                        .catch(error => res.status(400).json({ error: error.message }))
-                } catch (error) {
-                    res.status(400).json({ error: error.message })
-                }
-            })
+                registerUser(name, email, password)
+                    .then(() => res.status(201).send())
+                    .catch(error => res.status(400).json({ error: error.message }))
+            } catch (error) {
+                res.status(400).json({ error: error.message })
+            }
         })
 
-        api.post('/users/auth', (req, res) => {
-            let json = ''
+        api.post('/users/auth', jsonBodyParser, (req, res) => {
+            try {
+                const { email, password } = req.body
 
-            req.on('data', chunk => json += chunk)
-
-            req.on('end', () => {
-                try {
-                    const { email, password } = JSON.parse(json)
-
-                    authenticateUser(email, password)
-                        .then(userId => res.json(userId))
-                        .catch(error => res.status(400).json({ error: error.message }))
-                } catch (error) {
-                    res.status(400).json({ error: error.message })
-                }
-            })
+                authenticateUser(email, password)
+                    .then(userId => res.json(userId))
+                    .catch(error => res.status(400).json({ error: error.message }))
+            } catch (error) {
+                res.status(400).json({ error: error.message })
+            }
         })
 
         api.get('/users', (req, res) => {
@@ -80,26 +73,20 @@ client.connect()
             }
         })
 
-        api.post('/posts', (req, res) => {
-            let json = ''
+        api.post('/posts', jsonBodyParser, (req, res) => {
+            try {
+                const { authorization } = req.headers
 
-            req.on('data', chunk => json += chunk)
+                const userId = authorization.slice(7)
 
-            req.on('end', () => {
-                try {
-                    const { authorization } = req.headers
+                const { image, text } = req.body
 
-                    const userId = authorization.slice(7)
-
-                    const { image, text } = JSON.parse(json)
-
-                    createPost(userId, image, text)
-                        .then(() => res.status(201).send())
-                        .catch(error => res.status(400).json({ error: error.message }))
-                } catch (error) {
-                    res.status(400).json({ error: error.message })
-                }
-            })
+                createPost(userId, image, text)
+                    .then(() => res.status(201).send())
+                    .catch(error => res.status(400).json({ error: error.message }))
+            } catch (error) {
+                res.status(400).json({ error: error.message })
+            }
         })
 
         api.get('/posts', (req, res) => {
@@ -116,57 +103,39 @@ client.connect()
             }
         })
 
-        api.patch('/posts/:postId', (req, res) => {
-            let json = ''
+        api.patch('/posts/:postId', jsonBodyParser, (req, res) => {
+            try {
+                const { authorization } = req.headers
 
-            req.on('data', chunk => json += chunk)
+                const userId = authorization.slice(7)
 
-            req.on('end', () => {
-                try {
-                    const { authorization } = req.headers
+                const postId = req.params.postId
 
-                    const userId = parseInt(authorization.slice(7))
+                const { image, text } = req.body
 
-                    const postId = parseInt(req.params.postId)
-
-                    const { image, text } = JSON.parse(json)
-
-                    updatePost(userId, postId, image, text, error => {
-                        if (error) {
-                            res.status(400).json({ error: error.message })
-
-                            return
-                        }
-
-                        res.status(204).send()
-                    })
-                } catch (error) {
-                    res.status(400).json({ error: error.message })
-                }
-            })
+                updatePost(userId, postId, image, text)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(400).json({ error: error.message }))
+            } catch (error) {
+                res.status(400).json({ error: error.message })
+            }
         })
 
         api.delete('/posts/:postId', (req, res) => {
             try {
                 const { authorization } = req.headers
 
-                const userId = parseInt(authorization.slice(7))
+                const userId = authorization.slice(7)
 
-                const postId = parseInt(req.params.postId)
+                const postId = req.params.postId
 
-                deletePost(userId, postId, error => {
-                    if (error) {
-                        res.status(400).json({ error: error.message })
-
-                        return
-                    }
-
-                    res.status(204).send()
-                })
+                deletePost(userId, postId)
+                    .then(() => res.status(204).send())
+                    .catch(error => res.status(400).json({ error: error.message }))
             } catch (error) {
                 res.status(400).json({ error: error.message })
             }
         })
 
-        api.listen(8080, () => console.log('server listening in port 8080'))
+        api.listen(process.env.PORT, () => console.log(`server listening in port ${process.env.PORT}`))
     })

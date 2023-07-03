@@ -1,5 +1,5 @@
 const mongodb = require('mongodb')
-const deletePost = require('./deletePost')
+const createPost = require('./createPost')
 const context = require('./context')
 
 const { MongoClient } = mongodb
@@ -17,8 +17,8 @@ client.connect()
         context.posts = posts
 
         try {
-            return deletePost('64a33c894e3ac5af1e1113ca', '64a33caa4e3ac5af1e1113cb')
-                .then(() => console.log('post deleted'))
+            return createPost('649d7aa33131f548ae4a1990', 'https://img.freepik.com/free-photo/world-smile-day-emojis-arrangement_23-2149024491.jpg?w=2000', 'Smile :)')
+                .then(() => console.log('post created'))
                 .catch(error => console.error(error))
         } catch (error) {
             console.error(error)

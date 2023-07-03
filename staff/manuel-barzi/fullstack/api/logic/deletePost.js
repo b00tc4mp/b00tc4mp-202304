@@ -1,67 +1,29 @@
-const { readFile, writeFile } = require('fs')
+const context = require('./context')
+const { ObjectId } = require('mongodb')
 
-function deletePost(userId, postId, callback) {
-    if (typeof userId !== 'number') throw new Error('userId is not a number')
-    if (typeof postId !== 'number') throw new Error('postId is not a number')
-    if (typeof callback !== 'function') throw new Error('callback is not a function')
+function deletePost(userId, postId) {
+    if (typeof userId !== 'string') throw new Error('userId is not a string')
+    if (typeof postId !== 'string') throw new Error('postId is not a string')
 
-    readFile('data/users.json', (error, json) => {
-        if (error) {
-            callback(error)
+    const { users, posts } = context
 
-            return
-        }
+    const userObjectId = new ObjectId(userId)
+    const postObjectId = new ObjectId(postId)
 
-        const users = JSON.parse(json)
+    return users.findOne({ _id: userObjectId })
+        .then(user => {
+            if (!user) throw new Error('user not found')
 
-        const exists = users.some(user => user.id === userId)
-
-        if (!exists) {
-            callback(new Error('user not found'))
-
-            return
-        }
-
-        readFile('data/posts.json', (error, json) => {
-            if (error) {
-                callback(error)
-
-                return
-            }
-
-            const posts = JSON.parse(json)
-
-            const index = posts.findIndex(post => post.id === postId)
-
-            const post = posts[index]
-
-            if (!post) {
-                callback(new Error('post not found'))
-
-                return
-            }
-
-            if (post.author !== userId) {
-                callback(new Error('user is not the author of the post'))
-
-                return
-            }
-
-            posts.splice(index, 1)
-
-            const json2 = JSON.stringify(posts)
-
-            writeFile('data/posts.json', json2, error => {
-                if (error) {
-                    callback(error)
-
-                    return
-                }
-
-                callback(null)
-            })
+            return posts.findOne({ _id: postObjectId })
         })
-    })
+        .then(post => {
+            if (!post) throw new Error('post not found')
+
+            if (post.author.toString() !== userId) throw new Error('post does not belong to user')
+
+            return posts.deleteOne({ _id: postObjectId })
+        })
+        .then(() => { })
 }
 
 module.exports = deletePost
