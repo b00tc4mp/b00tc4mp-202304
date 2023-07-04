@@ -1,5 +1,5 @@
 function retrieveUser(userId, callback) {
-    if (typeof userId !== 'number') throw new Error('userId is not a number')
+    if (typeof userId !== 'string') throw new Error('userId is not a string')
     if (typeof callback !== 'function') throw new Error('callback is not a function')
 
     const xhr = new XMLHttpRequest

@@ -1,5 +1,5 @@
 const mongodb = require('mongodb')
-const retrievePosts = require('./retrievePosts')
+const retrievePost = require('./retrievePost')
 const context = require('./context')
 
 const { MongoClient } = mongodb
@@ -17,8 +17,8 @@ client.connect()
         context.posts = posts
 
         try {
-            return retrievePosts('64a33c894e3ac5af1e1113ca')
-                .then(posts => console.log(posts))
+            return retrievePost('64a40c4a167445c6864b1898', '64a40bd8167445c6864b1896')
+                .then(post => console.log(post))
                 .catch(error => console.error(error))
         } catch (error) {
             console.error(error)

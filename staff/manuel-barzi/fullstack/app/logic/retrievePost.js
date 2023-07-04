@@ -1,5 +1,6 @@
-function retrievePosts(userId, callback) {
+function retrievePost(userId, postId, callback) {
     if (typeof userId !== 'string') throw new Error('userId is not a string')
+    if (typeof postId !== 'string') throw new Error('postId is not a string')
     if (typeof callback !== 'function') throw new Error('callback is not a function')
 
     const xhr = new XMLHttpRequest
@@ -22,9 +23,9 @@ function retrievePosts(userId, callback) {
 
             const body = JSON.parse(json)
 
-            const posts = body
+            const post = body
 
-            callback(null, posts.reverse())
+            callback(null, post)
 
             return
         }
@@ -34,7 +35,7 @@ function retrievePosts(userId, callback) {
 
     // req
 
-    xhr.open('GET', 'http://localhost:8080/posts')
+    xhr.open('GET', `http://localhost:8080/posts/${postId}`)
 
     xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
 

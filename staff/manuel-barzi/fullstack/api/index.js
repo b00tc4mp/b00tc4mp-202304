@@ -6,6 +6,7 @@ const authenticateUser = require('./logic/authenticateUser')
 const retrieveUser = require('./logic/retrieveUser')
 const createPost = require('./logic/createPost')
 const retrievePosts = require('./logic/retrievePosts')
+const retrievePost = require('./logic/retrievePost')
 const updatePost = require('./logic/updatePost')
 const deletePost = require('./logic/deletePost')
 const cors = require('cors')
@@ -96,6 +97,23 @@ client.connect()
                 const userId = authorization.slice(7)
 
                 retrievePosts(userId)
+                    .then(posts => res.json(posts))
+                    .catch(error => res.status(400).json({ error: error.message }))
+            } catch (error) {
+                res.status(400).json({ error: error.message })
+            }
+        })
+
+        api.get('/posts/:postId', (req, res) => {
+            try {
+                const { authorization } = req.headers
+
+                const userId = authorization.slice(7)
+
+                // const postId = req.params.postId
+                const { postId } = req.params
+
+                retrievePost(userId, postId)
                     .then(posts => res.json(posts))
                     .catch(error => res.status(400).json({ error: error.message }))
             } catch (error) {

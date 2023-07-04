@@ -1,4 +1,6 @@
 function CreatePostModal(props) {
+    console.log('CreatePostModal -> render')
+
     const handleCancel = event => {
         event.preventDefault()
 

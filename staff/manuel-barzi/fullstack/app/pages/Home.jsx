@@ -21,6 +21,10 @@ function Home(props) {
     const modal = modalState[0]
     const setModal = modalState[1]
 
+    const postIdState = React.useState(null)
+    const postId = postIdState[0]
+    const setPostId = postIdState[1]
+
     React.useEffect(() => {
         try {
             retrievePosts(context.userId, (error, posts) => {
@@ -109,6 +113,31 @@ function Home(props) {
         }
     }
 
+    const handleOpenEditPostModal = postId => {
+        setModal('edit-post')
+        setPostId(postId)
+    }
+
+    const handleCancelEditPost = () => setModal(null)
+
+    const handlePostEdited = () => {
+        try {
+            retrievePosts(context.userId, (error, posts) => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                setAll(posts)
+                setView('all')
+                setModal(null)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
     return <div className="home-page">
         <header className="home-header">
             <h1 className="home-title"><a href="" onClick={handlePosts}>Hello, {user ? user.name : 'World'}!</a></h1>
@@ -121,9 +150,13 @@ function Home(props) {
             {all.map(post => {
                 return <article key={post.id} className="post">
                     <h2>{post.author.name}</h2>
-                    <img src={post.picture} className="post-image" />
+                    <img src={post.image} className="post-image" />
                     <p>{post.text}</p>
                     <time>{post.date.toString()}</time>
+                    {context.userId === post.author.id && <>
+                        <button onClick={() => handleOpenEditPostModal(post.id)}>📝</button>
+                        <button>🗑️</button>
+                    </>}
                 </article>
             })}
         </main>}
@@ -134,7 +167,7 @@ function Home(props) {
 
                 return <article key={post.id} className="post">
                     <h2>{user.name}</h2>
-                    <img src={post.picture} className="post-image" />
+                    <img src={post.image} className="post-image" />
                     <p>{post.text}</p>
                     <time>{post.date.toString()}</time>
                 </article>
@@ -147,7 +180,7 @@ function Home(props) {
 
                 return <article key={post.id} className="post">
                     <h2>{user.name}</h2>
-                    <img src={post.picture} className="post-image" />
+                    <img src={post.image} className="post-image" />
                     <p>{post.text}</p>
                     <time>{post.date.toString()}</time>
                 </article>
@@ -160,20 +193,7 @@ function Home(props) {
 
         {modal === 'create-post' && <CreatePostModal onCancel={handleCancelCreatePost} onCreated={handlePostCreated} />}
 
-        <div className="modal modify-post-modal off">
-            <form className="post-form">
-                <input type="hidden" name="postId"></input>
-
-                <label htmlFor="picture">Picture</label>
-                <input type="url" name="picture" id="picture"></input>
-
-                <label htmlFor="text">Text</label>
-                <textarea name="text"></textarea>
-
-                <button type="submit">Modify</button>
-                <button className="cancel-button">Cancel</button>
-            </form>
-        </div>
+        {modal === 'edit-post' && <EditPostModal postId={postId} onCancel={handleCancelEditPost} onEdited={handlePostEdited} />}
 
         <div className="modal sell-post-modal off">
             <form className="post-form">
