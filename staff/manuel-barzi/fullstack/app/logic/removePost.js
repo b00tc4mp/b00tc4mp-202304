@@ -1,20 +1,37 @@
-function removePost(email, postId) {
-    const user = users.find(user => user.email === email)
+function removePost(userId, postId, callback) {
+    if (typeof userId !== 'string') throw new Error('userId is not a string')
+    if (typeof postId !== 'string') throw new Error('postId is not a string')
+    if (typeof callback !== 'function') throw new Error('callback is not a function')
 
-    if (!user)
-        return false
+    const xhr = new XMLHttpRequest
 
-    const post = posts.find(post => post.id === postId)
+    // res
 
-    if (!post)
-        return false
+    xhr.onload = () => {
+        if (xhr.status === 400) {
+            const json = xhr.responseText
 
-    if (post.user !== email)
-        return false
+            const body = JSON.parse(json)
 
-    const index = posts.findIndex(post => post.id === postId)
+            callback(new Error(body.error))
 
-    posts.splice(index, 1)
+            return
+        }
 
-    return true
+        if (xhr.status === 204) {
+            callback(null)
+
+            return
+        }
+    }
+
+    xhr.onerror = () => callback(new Error('connection failed'))
+
+    // req
+
+    xhr.open('DELETE', `http://localhost:8080/posts/${postId}`)
+
+    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+
+    xhr.send()
 }

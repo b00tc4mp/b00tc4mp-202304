@@ -1,29 +1,11 @@
 function Home(props) {
     console.log('Home -> render')
 
-    const viewState = React.useState('all')
-    const view = viewState[0]
-    const setView = viewState[1]
-
-    const allState = React.useState([])
-    const all = allState[0]
-    const setAll = allState[1]
-
-    const mineState = React.useState([])
-    const mine = mineState[0]
-    const setMine = mineState[1]
-
-    const favsState = React.useState([])
-    const favs = favsState[0]
-    const setFavs = favsState[1]
-
-    const modalState = React.useState(null)
-    const modal = modalState[0]
-    const setModal = modalState[1]
-
-    const postIdState = React.useState(null)
-    const postId = postIdState[0]
-    const setPostId = postIdState[1]
+    const [view, setView] = React.useState('all')
+    const [user, setUser] = React.useState(null)
+    const [all, setAll] = React.useState([])
+    const [modal, setModal] = React.useState(null)
+    const [postId, setPostId] = React.useState(null)
 
     React.useEffect(() => {
         try {
@@ -40,10 +22,6 @@ function Home(props) {
             alert(error.message)
         }
     }, [])
-
-    const userState = React.useState(null)
-    const user = userState[0]
-    const setUser = userState[1]
 
     React.useEffect(() => {
         try {
@@ -118,7 +96,10 @@ function Home(props) {
         setPostId(postId)
     }
 
-    const handleCancelEditPost = () => setModal(null)
+    const handleCancelEditPost = () => {
+        setModal(null)
+        setPostId(null)
+    }
 
     const handlePostEdited = () => {
         try {
@@ -132,6 +113,36 @@ function Home(props) {
                 setAll(posts)
                 setView('all')
                 setModal(null)
+                setPostId(null)
+            })
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    const handleOpenDeletePostModal = postId => {
+        setModal('delete-post')
+        setPostId(postId)
+    }
+
+    const handleCancelDeletePost = () => {
+        setModal(null)
+        setPostId(null)
+    }
+
+    const handlePostDeleted = () => {
+        try {
+            retrievePosts(context.userId, (error, posts) => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+
+                setAll(posts)
+                setView('all')
+                setModal(null)
+                setPostId(null)
             })
         } catch (error) {
             alert(error.message)
@@ -141,8 +152,6 @@ function Home(props) {
     return <div className="home-page">
         <header className="home-header">
             <h1 className="home-title"><a href="" onClick={handlePosts}>Hello, {user ? user.name : 'World'}!</a></h1>
-            <a className="favs-link" href="" onClick={handleFavPosts}>Favs</a>
-            <a className="mine-link" href="" onClick={handleMinePosts}>Mine</a>
             <button className="logout-button" onClick={handleLogout}>Logout</button>
         </header>
 
@@ -155,34 +164,8 @@ function Home(props) {
                     <time>{post.date.toString()}</time>
                     {context.userId === post.author.id && <>
                         <button onClick={() => handleOpenEditPostModal(post.id)}>📝</button>
-                        <button>🗑️</button>
+                        <button onClick={() => handleOpenDeletePostModal(post.id)}>🗑️</button>
                     </>}
-                </article>
-            })}
-        </main>}
-
-        {view === 'favs' && <main className="fav-posts">
-            {favs.map(post => {
-                const user = retrieveUser(post.user)
-
-                return <article key={post.id} className="post">
-                    <h2>{user.name}</h2>
-                    <img src={post.image} className="post-image" />
-                    <p>{post.text}</p>
-                    <time>{post.date.toString()}</time>
-                </article>
-            })}
-        </main>}
-
-        {view === 'mine' && <main className="mine-posts">
-            {mine.map(post => {
-                const user = retrieveUser(post.user)
-
-                return <article key={post.id} className="post">
-                    <h2>{user.name}</h2>
-                    <img src={post.image} className="post-image" />
-                    <p>{post.text}</p>
-                    <time>{post.date.toString()}</time>
                 </article>
             })}
         </main>}
@@ -195,27 +178,6 @@ function Home(props) {
 
         {modal === 'edit-post' && <EditPostModal postId={postId} onCancel={handleCancelEditPost} onEdited={handlePostEdited} />}
 
-        <div className="modal sell-post-modal off">
-            <form className="post-form">
-                <input type="hidden" name="postId"></input>
-
-                <label htmlFor="price">Price</label>
-                <input type="number" name="price" id="price"></input>
-
-                <button type="submit">Sell</button>
-                <button className="cancel-button">Cancel</button>
-            </form>
-        </div>
-
-        <div className="modal buy-post-modal off">
-            <form className="post-form">
-                <input type="hidden" name="postId"></input>
-
-                <p>You are to buy this post for the price of <span>100</span> $</p>
-
-                <button type="submit">Buy</button>
-                <button className="cancel-button">Cancel</button>
-            </form>
-        </div>
+        {modal === 'delete-post' && <DeletePostModal postId={postId} onCancel={handleCancelDeletePost} onDeleted={handlePostDeleted} />}
     </div>
 }
