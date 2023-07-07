@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "author": 1,
+        "image": "new image",
+        "text": "new text",
+        "date": "2023-06-19T21:26:42.084Z"
+    },
+    {
+        "id": 2,
+        "author": 1,
+        "image": "https://nice.image.com",
+        "text": "hello image",
+        "date": "2023-06-19T21:09:27.892Z"
+    },
+    {
+        "id": 5,
+        "author": 1,
+        "image": "https://nice.image.com",
+        "text": "hello image",
+        "date": "2023-06-19T21:19:28.436Z"
+    }
+]
