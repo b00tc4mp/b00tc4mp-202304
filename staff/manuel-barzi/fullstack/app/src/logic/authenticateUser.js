@@ -21,9 +21,9 @@ function authenticateUser(email, password, callback) {
 
             const body = JSON.parse(json)
 
-            const userId = body
+            const token = body
 
-            callback(null, userId)
+            callback(null, token)
 
             return
         }

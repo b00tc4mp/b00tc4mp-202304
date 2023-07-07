@@ -1,5 +1,5 @@
-function createPost(userId, image, text, callback) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
+function createPost(token, image, text, callback) {
+    if (typeof token !== 'string') throw new Error('token is not a string')
     if (typeof image !== 'string') throw new Error('image is not a string')
     if (typeof text !== 'string') throw new Error('text is not a string')
     if (typeof callback !== 'function') throw new Error('callback is not a function')
@@ -32,7 +32,7 @@ function createPost(userId, image, text, callback) {
 
     xhr.open('POST', 'http://localhost:8080/posts')
 
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
     xhr.setRequestHeader('Content-Type', 'application/json')
 

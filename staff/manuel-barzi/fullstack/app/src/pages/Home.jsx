@@ -5,6 +5,7 @@ import CreatePostModal from '../components/CreatePostModal'
 import EditPostModal from '../components/EditPostModal'
 import DeletePostModal from '../components/DeletePostModal'
 import context from '../context'
+import { extractUserIdFromToken } from '../helpers'
 
 function Home(props) {
     console.log('Home -> render')
@@ -17,7 +18,7 @@ function Home(props) {
 
     useEffect(() => {
         try {
-            retrievePosts(context.userId, (error, posts) => {
+            retrievePosts(context.token, (error, posts) => {
                 if (error) {
                     alert(error.message)
 
@@ -33,7 +34,7 @@ function Home(props) {
 
     useEffect(() => {
         try {
-            retrieveUser(context.userId, (error, user) => {
+            retrieveUser(context.token, (error, user) => {
                 if (error) {
                     alert(error.message)
 
@@ -67,7 +68,7 @@ function Home(props) {
 
     const handlePostCreated = () => {
         try {
-            retrievePosts(context.userId, (error, posts) => {
+            retrievePosts(context.token, (error, posts) => {
                 if (error) {
                     alert(error.message)
 
@@ -95,7 +96,7 @@ function Home(props) {
 
     const handlePostEdited = () => {
         try {
-            retrievePosts(context.userId, (error, posts) => {
+            retrievePosts(context.token, (error, posts) => {
                 if (error) {
                     alert(error.message)
 
@@ -124,7 +125,7 @@ function Home(props) {
 
     const handlePostDeleted = () => {
         try {
-            retrievePosts(context.userId, (error, posts) => {
+            retrievePosts(context.token, (error, posts) => {
                 if (error) {
                     alert(error.message)
 
@@ -141,6 +142,8 @@ function Home(props) {
         }
     }
 
+    const userId = extractUserIdFromToken()
+
     return <div className="home-page">
         <header className="home-header">
             <h1 className="home-title"><a href="" onClick={handlePosts}>Hello, {user ? user.name : 'World'}!</a></h1>
@@ -154,7 +157,7 @@ function Home(props) {
                     <img src={post.image} className="post-image" />
                     <p>{post.text}</p>
                     <time>{post.date.toString()}</time>
-                    {context.userId === post.author.id && <>
+                    {userId === post.author.id && <>
                         <button onClick={() => handleOpenEditPostModal(post.id)}>📝</button>
                         <button onClick={() => handleOpenDeletePostModal(post.id)}>🗑️</button>
                     </>}

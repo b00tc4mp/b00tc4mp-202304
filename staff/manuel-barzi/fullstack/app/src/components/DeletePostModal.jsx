@@ -15,7 +15,7 @@ function DeletePostModal(props) {
         event.preventDefault()
 
         try {
-            removePost(context.userId, props.postId, error => {
+            removePost(context.token, props.postId, error => {
                 if (error) {
                     alert(error.message)
 

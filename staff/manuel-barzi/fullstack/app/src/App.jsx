@@ -7,7 +7,7 @@ import context from './context'
 function App() {
   console.log('App -> render')
 
-  const [view, setView] = useState(context.userId ? 'home' : 'login')
+  const [view, setView] = useState(context.token ? 'home' : 'login')
 
   const handleGoToRegister = () => setView('register')
 

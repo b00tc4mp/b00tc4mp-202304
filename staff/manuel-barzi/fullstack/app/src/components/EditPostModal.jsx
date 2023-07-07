@@ -11,7 +11,7 @@ function EditPostModal(props) {
 
     useEffect(() => {
         try {
-            retrievePost(context.userId, props.postId, (error, post) => {
+            retrievePost(context.token, props.postId, (error, post) => {
                 if (error) {
                     alert(error.message)
 
@@ -40,7 +40,7 @@ function EditPostModal(props) {
         const text = event.target.text.value
 
         try {
-            modifyPost(context.userId, props.postId, image, text, error => {
+            modifyPost(context.token, props.postId, image, text, error => {
                 if (error) {
                     alert(error.message)
 

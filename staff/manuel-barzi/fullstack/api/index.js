@@ -13,6 +13,7 @@ const cors = require('cors')
 const mongodb = require('mongodb')
 const context = require('./logic/context')
 const bodyParser = require('body-parser')
+const jwt = require('jsonwebtoken')
 
 const jsonBodyParser = bodyParser.json()
 
@@ -53,7 +54,13 @@ client.connect()
                 const { email, password } = req.body
 
                 authenticateUser(email, password)
-                    .then(userId => res.json(userId))
+                    .then(userId => {
+                        const payload = { sub: userId }
+
+                        const token = jwt.sign(payload, process.env.SECRET)
+
+                        res.json(token)
+                    })
                     .catch(error => res.status(400).json({ error: error.message }))
             } catch (error) {
                 res.status(400).json({ error: error.message })
@@ -64,7 +71,10 @@ client.connect()
             try {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(7)
+                const token = authorization.slice(7)
+
+                const payload = jwt.verify(token, process.env.SECRET)
+                const { sub: userId } = payload
 
                 retrieveUser(userId)
                     .then(user => res.json(user))
@@ -78,7 +88,10 @@ client.connect()
             try {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(7)
+                const token = authorization.slice(7)
+
+                const payload = jwt.verify(token, process.env.SECRET)
+                const { sub: userId } = payload
 
                 const { image, text } = req.body
 
@@ -94,7 +107,10 @@ client.connect()
             try {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(7)
+                const token = authorization.slice(7)
+
+                const payload = jwt.verify(token, process.env.SECRET)
+                const { sub: userId } = payload
 
                 retrievePosts(userId)
                     .then(posts => res.json(posts))
@@ -108,9 +124,11 @@ client.connect()
             try {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(7)
+                const token = authorization.slice(7)
 
-                // const postId = req.params.postId
+                const payload = jwt.verify(token, process.env.SECRET)
+                const { sub: userId } = payload
+
                 const { postId } = req.params
 
                 retrievePost(userId, postId)
@@ -125,7 +143,10 @@ client.connect()
             try {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(7)
+                const token = authorization.slice(7)
+
+                const payload = jwt.verify(token, process.env.SECRET)
+                const { sub: userId } = payload
 
                 const postId = req.params.postId
 
@@ -143,7 +164,10 @@ client.connect()
             try {
                 const { authorization } = req.headers
 
-                const userId = authorization.slice(7)
+                const token = authorization.slice(7)
+
+                const payload = jwt.verify(token, process.env.SECRET)
+                const { sub: userId } = payload
 
                 const postId = req.params.postId
 

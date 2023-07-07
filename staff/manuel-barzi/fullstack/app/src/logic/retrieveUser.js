@@ -1,5 +1,5 @@
-function retrieveUser(userId, callback) {
-    if (typeof userId !== 'string') throw new Error('userId is not a string')
+function retrieveUser(token, callback) {
+    if (typeof token !== 'string') throw new Error('token is not a string')
     if (typeof callback !== 'function') throw new Error('callback is not a function')
 
     const xhr = new XMLHttpRequest
@@ -36,7 +36,7 @@ function retrieveUser(userId, callback) {
 
     xhr.open('GET', 'http://localhost:8080/users')
 
-    xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
     xhr.send()
 }
